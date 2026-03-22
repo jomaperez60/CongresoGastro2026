@@ -345,6 +345,55 @@
             display: none !important;
         }
 
+        /* Accordions para Programa */
+        .accordion {
+            background-color: var(--azul-primario);
+            color: white;
+            cursor: pointer;
+            padding: 15px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: 0.4s;
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .accordion:after {
+            content: '\02795'; /* Unicode for plus */
+            font-size: 14px;
+            color: white;
+            margin-left: 5px;
+        }
+
+        .accordion.active:after {
+            content: "\2796"; /* Unicode for minus */
+        }
+
+        .accordion.active {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            margin-bottom: 0;
+        }
+
+        .panel {
+            padding: 15px 10px;
+            display: none;
+            background-color: var(--fondo-tarjeta);
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+
         /* Modal Feedback */
         .modal {
             display: none;
@@ -536,8 +585,12 @@
     </nav>
 
     <div class="container" id="agenda">
-        <div class="tabs">
-            <button class="tab-btn active" onclick="verDia(event, 'jueves')">Jueves 30 Jul</button>
+        <h2>Consulta el Programa</h2>
+
+        <button class="accordion" onclick="toggleAccordion('programa-adultos')">Programa Adultos</button>
+        <div id="programa-adultos" class="panel">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="verDia(event, 'jueves')">Jueves 30 Jul</button>
             <button class="tab-btn" onclick="verDia(event, 'viernes')">Viernes 31 Jul</button>
             <button class="tab-btn" onclick="verDia(event, 'sabado')">Sábado 1 Ago</button>
         </div>
@@ -728,6 +781,16 @@
             <div class="agenda-item"><span class="hora">11:40 - 12:00</span> <span class="charla">🎖️ SESIÓN DE
                     CLAUSURA</span></div>
         </div>
+        </div> <!-- Close panel for Programa Adultos -->
+
+        <button class="accordion" onclick="toggleAccordion('programa-pediatria')">Programa Pediatría</button>
+        <div id="programa-pediatria" class="panel">
+            <div class="agenda-item" style="text-align: center; padding: 40px 20px;">
+                <h3 style="color: var(--azul-primario); margin-bottom: 15px;">🚧 En trabajo</h3>
+                <p>El programa científico de pediatría estará disponible próximamente.</p>
+            </div>
+        </div>
+
     </div>
 
     <div class="container" id="speakers">
@@ -901,6 +964,19 @@
     </div>
 
     <script>
+        function toggleAccordion(id) {
+            const panel = document.getElementById(id);
+            const btn = document.querySelector(`button[onclick="toggleAccordion('${id}')"]`);
+            
+            if (panel.style.display === "block") {
+                panel.style.display = "none";
+                btn.classList.remove("active");
+            } else {
+                panel.style.display = "block";
+                btn.classList.add("active");
+            }
+        }
+
         function verDia(evt, dayId) {
             var i, tabcontent, tablinks;
 
