@@ -1345,14 +1345,18 @@
 
             document.querySelectorAll('.agenda-item').forEach(item => {
                 const ponenteEl = item.querySelector('.ponente');
-                if (ponenteEl && ponenteEl.innerText.toLowerCase().includes(keyword.toLowerCase())) {
-                    const charlaEl = item.querySelector('.charla');
-                    if (charlaEl) {
-                        const li = document.createElement('li');
-                        li.innerText = charlaEl.innerText;
-                        li.style.marginBottom = '8px';
-                        talksList.appendChild(li);
-                        found = true;
+                if (ponenteEl) {
+                    const textoPonente = ponenteEl.textContent.toLowerCase().replace(/\s+/g, ' ');
+                    const searchKey = keyword.toLowerCase().replace(/\s+/g, ' ');
+                    if (textoPonente.includes(searchKey)) {
+                        const charlaEl = item.querySelector('.charla');
+                        if (charlaEl) {
+                            const li = document.createElement('li');
+                            li.innerText = charlaEl.innerText.trim();
+                            li.style.marginBottom = '8px';
+                            talksList.appendChild(li);
+                            found = true;
+                        }
                     }
                 }
             });
