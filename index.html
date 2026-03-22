@@ -1352,7 +1352,7 @@
                         const charlaEl = item.querySelector('.charla');
                         if (charlaEl) {
                             const li = document.createElement('li');
-                            li.innerText = charlaEl.innerText.trim();
+                            li.innerText = charlaEl.textContent.replace(/\s+/g, ' ').trim();
                             li.style.marginBottom = '8px';
                             talksList.appendChild(li);
                             found = true;
