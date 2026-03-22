@@ -175,6 +175,39 @@
             margin-top: 2px;
         }
 
+        .agenda-actions {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .action-icon {
+            background: var(--azul-primario);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 12px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+            font-weight: bold;
+        }
+
+        .action-icon:hover {
+            opacity: 0.85;
+            transform: scale(1.02);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .action-icon.slido {
+            background: var(--verde-exito);
+        }
+
         .comida {
             background: #fff3cd;
             padding: 10px;
@@ -467,25 +500,7 @@
             box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);
         }
 
-        .btn-slido {
-            display: block;
-            background: #1951f0;
-            color: white;
-            text-align: center;
-            text-decoration: none;
-            padding: 14px 20px;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            margin-bottom: 25px;
-            transition: 0.2s;
-        }
 
-        .btn-slido:hover {
-            background: #0c36a8;
-            color: white;
-            text-decoration: none;
-        }
 
         /* Clickeable Agenda Items */
         .agenda-item {
@@ -496,15 +511,7 @@
             background: rgba(0, 86, 179, 0.05);
         }
 
-        .clickable-charla {
-            cursor: pointer;
-            text-decoration: underline;
-            text-underline-offset: 3px;
-        }
 
-        .clickable-charla:hover {
-            color: #004494;
-        }
     </style>
 </head>
 
@@ -861,14 +868,6 @@
             <h3 id="modalTitle">Título de la Charla</h3>
             <p id="modalSpeaker" class="modal-ponente">Ponente</p>
 
-            <div class="form-group" style="text-align: center;">
-                <p style="margin-bottom: 15px; font-size: 0.95rem; color: #555;">Pasa al panel interactivo para hacer
-                    preguntas en vivo al moderador y votar por las mejores preguntas del público.</p>
-                <a href="https://app.sli.do/event/6rpxnK96rLoqEW9HHD326w" target="_blank" class="btn-slido">Hacer
-                    Pregunta en Vivo (Slido)</a>
-                <hr style="border: 0; border-top: 1px solid #ddd; margin: 25px 0;">
-            </div>
-
             <div class="form-group">
                 <label>Califica esta Charla:</label>
                 <div class="rating-container">
@@ -1095,13 +1094,21 @@
             form.submit(); // Se enviará de forma nativa cambiando la pantalla muy brevemente
         }
 
-        // Hacer las charlas clickeables para abrir el modal
+        // Agregar botones de acción a las charlas
         document.querySelectorAll('.agenda-item').forEach(item => {
-            const charlaEl = item.querySelector('.charla');
-            if (charlaEl && !item.classList.contains('comida')) {
-                charlaEl.classList.add('clickable-charla');
-                charlaEl.addEventListener('click', () => {
-                    const titulo = charlaEl.innerText;
+            if (!item.classList.contains('comida')) {
+                const actionsDiv = document.createElement('div');
+                actionsDiv.className = 'agenda-actions';
+                actionsDiv.innerHTML = `
+                    <a href="https://app.sli.do/event/6rpxnK96rLoqEW9HHD326w" target="_blank" class="action-icon slido" title="Hacer pregunta en vivo">🗯️ Preguntas</a>
+                    <button class="action-icon eval" title="Evaluar charla">⭐ Evaluar</button>
+                `;
+                item.appendChild(actionsDiv);
+
+                const evalBtn = actionsDiv.querySelector('.eval');
+                evalBtn.addEventListener('click', () => {
+                    const charlaEl = item.querySelector('.charla');
+                    const titulo = charlaEl ? charlaEl.innerText : 'Charla';
                     const ponenteEl = item.querySelector('.ponente');
                     const ponente = ponenteEl ? ponenteEl.innerText : '';
                     abrirModal(titulo, ponente);
