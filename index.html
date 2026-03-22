@@ -201,7 +201,7 @@
         .action-icon:hover {
             opacity: 0.85;
             transform: scale(1.02);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
         .action-icon.slido {
@@ -363,18 +363,20 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
         .accordion:after {
-            content: '\02795'; /* Unicode for plus */
+            content: '\02795';
+            /* Unicode for plus */
             font-size: 14px;
             color: white;
             margin-left: 5px;
         }
 
         .accordion.active:after {
-            content: "\2796"; /* Unicode for minus */
+            content: "\2796";
+            /* Unicode for minus */
         }
 
         .accordion.active {
@@ -559,17 +561,15 @@
         .agenda-item:not(.comida):hover {
             background: rgba(0, 86, 179, 0.05);
         }
-
-
     </style>
 </head>
 
 <body>
 
     <header>
-        <h1>XVIII Congreso Internacional de Gastroenterología y VIII de Gastropediatría 2026</h1>
+        <h1>XVII Congreso Internacional de Gastroenterología y VII de Gastropediatría 2026</h1>
         <h2>“DESAFÍOS GLOBALES, PERSPECTIVAS LOCALES EN GASTROENTEROLOGÍA”</h2>
-        <div class="reconocimiento">En reconocimiento del Dr. Enrique Martínez Reina</div>
+        <div class="reconocimiento">Dr. Enrique Martínez Reina</div>
     </header>
 
     <div class="search-box">
@@ -591,196 +591,241 @@
         <div id="programa-adultos" class="panel">
             <div class="tabs">
                 <button class="tab-btn active" onclick="verDia(event, 'jueves')">Jueves 30 Jul</button>
-            <button class="tab-btn" onclick="verDia(event, 'viernes')">Viernes 31 Jul</button>
-            <button class="tab-btn" onclick="verDia(event, 'sabado')">Sábado 1 Ago</button>
-        </div>
-
-        <div id="jueves" class="tab-content active">
-            <h3 class="day-title">Jueves 30 de Julio</h3>
-            <div class="agenda-item"><span class="hora">07:00 - 07:45</span> <span class="charla">Registro e
-                    Inauguración</span></div>
-            <div class="agenda-item"><span class="hora">07:45 - 08:00</span> <span class="charla">Palabras de
-                    bienvenida: Dr. Jorge Suazo Barahona, presidente de la Asociación Hondureña de
-                    Gastroenterología</span></div>
-
-            <div class="modulo-header">MÓDULO 1: ESÓFAGO Y ESTÓMAGO</div>
-            <div class="agenda-item"><span class="hora">08:00 - 08:20</span> <span class="charla">¿Cómo debemos abordar
-                    la Dispepsia Funcional en 2026 en Latinoamérica?</span><span class="ponente">Dr. Ignacio Hanna
-                    Jairala (Ecuador)</span></div>
-            <div class="agenda-item"><span class="hora">08:20 - 08:40</span> <span class="charla">Disfagia esofágica:
-                    claves clínicas para el médico no especialista</span><span class="ponente">Dra. Laura Solé
-                    (Argentina)</span></div>
-            <div class="agenda-item"><span class="hora">08:40 - 09:00</span> <span class="charla">Manejo del ERGE en la
-                    era de los PCABs: ¿los IBP se quedan o se van?</span><span class="ponente">Dr. Ignacio Hanna Jairala
-                    (Ecuador)</span></div>
-            <div class="agenda-item"><span class="hora">09:00 - 09:20</span> <span class="charla">Reflujo
-                    laringofaríngeo: no todo es ácido, no todo es reflujo</span><span class="ponente">Dra. Laura Solé
-                    (Argentina)</span></div>
-            <div class="agenda-item"><span class="hora">09:20 - 09:40</span> <span class="charla">Panel de
-                    expertos</span><span class="ponente">Todos los ponentes del módulo</span></div>
-
-            <div class="agenda-item comida">09:40 - 10:00 ☕ COFFEE BREAK</div>
-
-            <div class="modulo-header">MÓDULO 2: INTESTINO DELGADO Y COLON</div>
-            <div class="agenda-item"><span class="hora">10:00 - 10:20</span> <span class="charla">Enfermedad celíaca:
-                    cuándo sospecharla y cómo confirmarla correctamente</span><span class="ponente">Dr. Luis Valdovinos
-                    García (México)</span></div>
-            <div class="agenda-item"><span class="hora">10:20 - 10:40</span> <span class="charla">Nuevas perspectivas
-                    terapéuticas en el síndrome de intestino irritable</span><span class="ponente">Dr. Ignacio Hanna
-                    Jairala (Ecuador)</span></div>
-            <div class="agenda-item"><span class="hora">10:40 - 11:00</span> <span class="charla">Diarrea crónica:
-                    enfoque diagnóstico paso a paso</span><span class="ponente">Dr. Luis Valdovinos García
-                    (México)</span></div>
-            <div class="agenda-item"><span class="hora">11:00 - 11:20</span> <span class="charla">Distensión abdominal:
-                    abordaje integral</span><span class="ponente">Dr. Ignacio Hanna Jairala (Ecuador)</span></div>
-            <div class="agenda-item"><span class="hora">11:20 - 11:40</span> <span class="charla">Panel de expertos -
-                    Módulo 2</span><span class="ponente">Todos los ponentes del módulo</span></div>
-            <div class="agenda-item"><span class="hora">11:40 - 12:00</span> <span class="charla">Transición a Simposio
-                    Comida</span></div>
-
-            <div class="modulo-header">🍽 SIMPOSIO COMIDA SLNG</div>
-            <div class="agenda-item comida"><span class="hora">12:00 - 13:30</span> <span class="charla">"Estreñimiento
-                    crónico: una sola entidad con diversas caras"</span><span class="ponente">Dra. Laura Solé
-                    (Argentina), Dr. Ignacio Hanna Jairala (Ecuador), Dr. Luis Valdovinos García (México)</span></div>
-
-            <div class="modulo-header">MÓDULO 3: PÁNCREAS</div>
-            <div class="agenda-item"><span class="hora">13:30 - 13:50</span> <span class="charla">Actualidades en la
-                    pancreatitis autoinmune</span><span class="ponente">Dr. Enrique de Madaria (España)</span></div>
-            <div class="agenda-item"><span class="hora">13:50 - 14:10</span> <span class="charla">USE en enfermedades
-                    pancreáticas</span><span class="ponente">Dr. Johny Cerna Cardona (México)</span></div>
-            <div class="agenda-item"><span class="hora">14:10 - 14:30</span> <span class="charla">Avances en el
-                    diagnóstico y tratamiento de la Pancreatitis Aguda</span><span class="ponente">Dr. Enrique de
-                    Madaria (España)</span></div>
-            <div class="agenda-item"><span class="hora">14:30 - 14:50</span> <span class="charla">Cómo diagnosticamos y
-                    manejamos la insuficiencia pancreática exocrina</span><span class="ponente">Dr. Enrique de Madaria
-                    (España)</span></div>
-            <div class="agenda-item"><span class="hora">14:50 - 15:10</span> <span class="charla">Panel de
-                    expertos</span><span class="ponente">Todos los ponentes del módulo</span></div>
-
-            <div class="agenda-item comida">15:10 - 15:30 ☕ COFFEE BREAK</div>
-
-            <div class="modulo-header">MÓDULO 4: COLON</div>
-            <div class="agenda-item"><span class="hora">15:30 - 15:50</span> <span class="charla">Recomendaciones sobre
-                    el diagnóstico, caracterización y manejo de los pólipos del colon: visión del coloproctólogo</span>
+                <button class="tab-btn" onclick="verDia(event, 'viernes')">Viernes 31 Jul</button>
+                <button class="tab-btn" onclick="verDia(event, 'sabado')">Sábado 1 Ago</button>
             </div>
-            <div class="agenda-item"><span class="hora">15:50 - 16:10</span> <span class="charla">Diagnóstico y
-                    seguimiento de cáncer colorrectal</span></div>
-            <div class="agenda-item"><span class="hora">16:10 - 16:30</span> <span class="charla">Enfermedad
-                    diverticular</span><span class="ponente">Dr. José Bandera Quijano (México)</span></div>
-            <div class="agenda-item"><span class="hora">16:30 - 16:50</span> <span class="charla">Actualidades en el
-                    manejo de lesiones anorrectales benignas: claves de diagnóstico y manejo para el consultorio</span>
+
+            <div id="jueves" class="tab-content active">
+                <h3 class="day-title">Jueves 30 de Julio</h3>
+                <div class="agenda-item"><span class="hora">07:00 - 07:45</span> <span class="charla">Registro e
+                        Inauguración</span></div>
+                <div class="agenda-item"><span class="hora">07:45 - 08:00</span> <span class="charla">Palabras de
+                        bienvenida: Dr. Jorge Suazo Barahona, presidente de la Asociación Hondureña de
+                        Gastroenterología</span></div>
+
+                <div class="modulo-header">MÓDULO 1: ESÓFAGO Y ESTÓMAGO</div>
+                <div class="agenda-item"><span class="hora">08:00 - 08:20</span> <span class="charla">¿Cómo debemos
+                        abordar
+                        la Dispepsia Funcional en 2026 en Latinoamérica?</span><span class="ponente">Dr. Ignacio Hanna
+                        Jairala (Ecuador)</span></div>
+                <div class="agenda-item"><span class="hora">08:20 - 08:40</span> <span class="charla">Disfagia
+                        esofágica:
+                        claves clínicas para el médico no especialista</span><span class="ponente">Dra. Laura Solé
+                        (Argentina)</span></div>
+                <div class="agenda-item"><span class="hora">08:40 - 09:00</span> <span class="charla">Manejo del ERGE en
+                        la
+                        era de los PCABs: ¿los IBP se quedan o se van?</span><span class="ponente">Dr. Ignacio Hanna
+                        Jairala
+                        (Ecuador)</span></div>
+                <div class="agenda-item"><span class="hora">09:00 - 09:20</span> <span class="charla">Reflujo
+                        laringofaríngeo: no todo es ácido, no todo es reflujo</span><span class="ponente">Dra. Laura
+                        Solé
+                        (Argentina)</span></div>
+                <div class="agenda-item"><span class="hora">09:20 - 09:40</span> <span class="charla">Panel de
+                        expertos</span><span class="ponente">Todos los ponentes del módulo</span></div>
+
+                <div class="agenda-item comida">09:40 - 10:00 ☕ COFFEE BREAK</div>
+
+                <div class="modulo-header">MÓDULO 2: INTESTINO DELGADO Y COLON</div>
+                <div class="agenda-item"><span class="hora">10:00 - 10:20</span> <span class="charla">Enfermedad
+                        celíaca:
+                        cuándo sospecharla y cómo confirmarla correctamente</span><span class="ponente">Dr. Luis
+                        Valdovinos
+                        García (México)</span></div>
+                <div class="agenda-item"><span class="hora">10:20 - 10:40</span> <span class="charla">Nuevas
+                        perspectivas
+                        terapéuticas en el síndrome de intestino irritable</span><span class="ponente">Dr. Ignacio Hanna
+                        Jairala (Ecuador)</span></div>
+                <div class="agenda-item"><span class="hora">10:40 - 11:00</span> <span class="charla">Diarrea crónica:
+                        enfoque diagnóstico paso a paso</span><span class="ponente">Dr. Luis Valdovinos García
+                        (México)</span></div>
+                <div class="agenda-item"><span class="hora">11:00 - 11:20</span> <span class="charla">Distensión
+                        abdominal:
+                        abordaje integral</span><span class="ponente">Dr. Ignacio Hanna Jairala (Ecuador)</span></div>
+                <div class="agenda-item"><span class="hora">11:20 - 11:40</span> <span class="charla">Panel de expertos
+                        -
+                        Módulo 2</span><span class="ponente">Todos los ponentes del módulo</span></div>
+                <div class="agenda-item"><span class="hora">11:40 - 12:00</span> <span class="charla">Transición a
+                        Simposio
+                        Comida</span></div>
+
+                <div class="modulo-header">🍽 SIMPOSIO COMIDA SLNG</div>
+                <div class="agenda-item comida"><span class="hora">12:00 - 13:30</span> <span
+                        class="charla">"Estreñimiento
+                        crónico: una sola entidad con diversas caras"</span><span class="ponente">Dra. Laura Solé
+                        (Argentina), Dr. Ignacio Hanna Jairala (Ecuador), Dr. Luis Valdovinos García (México)</span>
+                </div>
+
+                <div class="modulo-header">MÓDULO 3: PÁNCREAS</div>
+                <div class="agenda-item"><span class="hora">13:30 - 13:50</span> <span class="charla">Actualidades en la
+                        pancreatitis autoinmune</span><span class="ponente">Dr. Enrique de Madaria (España)</span></div>
+                <div class="agenda-item"><span class="hora">13:50 - 14:10</span> <span class="charla">USE en
+                        enfermedades
+                        pancreáticas</span><span class="ponente">Dr. Johny Cerna Cardona (México)</span></div>
+                <div class="agenda-item"><span class="hora">14:10 - 14:30</span> <span class="charla">Avances en el
+                        diagnóstico y tratamiento de la Pancreatitis Aguda</span><span class="ponente">Dr. Enrique de
+                        Madaria (España)</span></div>
+                <div class="agenda-item"><span class="hora">14:30 - 14:50</span> <span class="charla">Cómo
+                        diagnosticamos y
+                        manejamos la insuficiencia pancreática exocrina</span><span class="ponente">Dr. Enrique de
+                        Madaria
+                        (España)</span></div>
+                <div class="agenda-item"><span class="hora">14:50 - 15:10</span> <span class="charla">Panel de
+                        expertos</span><span class="ponente">Todos los ponentes del módulo</span></div>
+
+                <div class="agenda-item comida">15:10 - 15:30 ☕ COFFEE BREAK</div>
+
+                <div class="modulo-header">MÓDULO 4: COLON</div>
+                <div class="agenda-item"><span class="hora">15:30 - 15:50</span> <span class="charla">Recomendaciones
+                        sobre
+                        el diagnóstico, caracterización y manejo de los pólipos del colon: visión del
+                        coloproctólogo</span>
+                </div>
+                <div class="agenda-item"><span class="hora">15:50 - 16:10</span> <span class="charla">Diagnóstico y
+                        seguimiento de cáncer colorrectal</span></div>
+                <div class="agenda-item"><span class="hora">16:10 - 16:30</span> <span class="charla">Enfermedad
+                        diverticular</span><span class="ponente">Dr. José Bandera Quijano (México)</span></div>
+                <div class="agenda-item"><span class="hora">16:30 - 16:50</span> <span class="charla">Actualidades en el
+                        manejo de lesiones anorrectales benignas: claves de diagnóstico y manejo para el
+                        consultorio</span>
+                </div>
+                <div class="agenda-item"><span class="hora">16:50 - 17:10</span> <span class="charla">Panel de
+                        expertos</span><span class="ponente">Todos los ponentes del módulo</span></div>
             </div>
-            <div class="agenda-item"><span class="hora">16:50 - 17:10</span> <span class="charla">Panel de
-                    expertos</span><span class="ponente">Todos los ponentes del módulo</span></div>
-        </div>
 
-        <div id="viernes" class="tab-content">
-            <h3 class="day-title">Viernes 31 de Julio</h3>
-            <div class="modulo-header">MÓDULO 5: HÍGADO Y OBESIDAD</div>
-            <div class="agenda-item"><span class="hora">08:00 - 08:20</span> <span class="charla">MASLD como un problema
-                    creciente de salud pública mundial</span><span class="ponente">Dra. Graciela Castro Narro
-                    (México)</span></div>
-            <div class="agenda-item"><span class="hora">08:20 - 08:40</span> <span class="charla">Riesgo cardiovascular
-                    en MASLD y estrategias de control</span><span class="ponente">Dr. Francisco Barrera (Chile)</span>
+            <div id="viernes" class="tab-content">
+                <h3 class="day-title">Viernes 31 de Julio</h3>
+                <div class="modulo-header">MÓDULO 5: HÍGADO Y OBESIDAD</div>
+                <div class="agenda-item"><span class="hora">08:00 - 08:20</span> <span class="charla">MASLD como un
+                        problema
+                        creciente de salud pública mundial</span><span class="ponente">Dra. Graciela Castro Narro
+                        (México)</span></div>
+                <div class="agenda-item"><span class="hora">08:20 - 08:40</span> <span class="charla">Riesgo
+                        cardiovascular
+                        en MASLD y estrategias de control</span><span class="ponente">Dr. Francisco Barrera
+                        (Chile)</span>
+                </div>
+                <div class="agenda-item"><span class="hora">08:40 - 09:00</span> <span class="charla">Terapias
+                        específicas
+                        nuevas y emergentes en MASLD</span><span class="ponente">Dra. Graciela Castro Narro
+                        (México)</span>
+                </div>
+                <div class="agenda-item"><span class="hora">09:00 - 09:20</span> <span class="charla">Obesidad: lo que
+                        el
+                        gastroenterólogo debe saber</span><span class="ponente">Dr. Francisco Barrera (Chile)</span>
+                </div>
+                <div class="agenda-item"><span class="hora">09:20 - 09:40</span> <span class="charla">Panel de
+                        expertos</span><span class="ponente">Todos los ponentes del módulo</span></div>
+
+                <div class="agenda-item comida">09:40 - 10:00 ☕ COFFEE BREAK</div>
+
+                <div class="modulo-header">MÓDULO 6: ESTUDIOS DIAGNÓSTICOS EN NEUROGASTROENTEROLOGÍA</div>
+                <div class="agenda-item"><span class="hora">10:00 - 10:20</span> <span class="charla">Estudios
+                        diagnósticos
+                        para la disfagia orofaríngea</span><span class="ponente">Dr. Jorge Suazo Barahona
+                        (Honduras)</span>
+                </div>
+                <div class="agenda-item"><span class="hora">10:20 - 10:40</span> <span class="charla">pH-metría,
+                        pH-impedancia, Bravo: ¿Cuál, cómo y por qué?</span><span class="ponente">Dr. Luis Valdovinos
+                        García
+                        (México)</span></div>
+                <div class="agenda-item"><span class="hora">10:40 - 11:00</span> <span class="charla">Pruebas de
+                        aliento: lo
+                        que debemos saber</span><span class="ponente">Dr. Luis Valdovinos García (México)</span></div>
+                <div class="agenda-item"><span class="hora">11:00 - 11:20</span> <span class="charla">Manometría
+                        anorrectal:
+                        ¿cuándo, cómo y por qué?</span><span class="ponente">Dra. Laura Solé (Argentina)</span></div>
+                <div class="agenda-item"><span class="hora">11:20 - 11:40</span> <span class="charla">Rol del
+                        biofeedback en
+                        los trastornos anorrectales</span><span class="ponente">Dra. Laura Solé (Argentina)</span></div>
+                <div class="agenda-item"><span class="hora">11:40 - 12:00</span> <span class="charla">Panel de
+                        expertos</span><span class="ponente">Todos los ponentes del módulo</span></div>
+
+                <div class="modulo-header">🍽 SIMPOSIO COMIDA 2</div>
+                <div class="agenda-item comida"><span class="hora">12:00 - 13:30</span> <span
+                        class="charla">Probióticos</span><span class="ponente">Dr. Francisco Guarner</span></div>
+
+                <div class="modulo-header">MÓDULO 7: HELICOBACTER PYLORI Y CANCER GÁSTRICO</div>
+                <div class="agenda-item"><span class="hora">13:30 - 13:50</span> <span class="charla">Helicobacter
+                        pylori:
+                        Qué dicen las guías de manejo y qué es aplicable a nuestro medio</span></div>
+                <div class="agenda-item"><span class="hora">13:50 - 14:10</span> <span class="charla">Tratamiento de H.
+                        pylori: Errores frecuentes, opciones de rescate y cuándo detenerse</span></div>
+                <div class="agenda-item"><span class="hora">14:10 - 14:30</span> <span class="charla">Lesiones
+                        premalignas
+                        gástricas: ¿qué hacer y cada cuánto vigilar?</span><span class="ponente">Dr. Johny Cerna Cardona
+                        (México)</span></div>
+                <div class="agenda-item"><span class="hora">14:30 - 14:50</span> <span class="charla">Cáncer gástrico:
+                        detección oportuna y papel del médico no especialista</span></div>
+                <div class="agenda-item"><span class="hora">14:50 - 15:10</span> <span class="charla">Panel de
+                        Expertos</span><span class="ponente">Todos los ponentes del módulo</span></div>
+
+                <div class="agenda-item comida">15:10 - 15:30 ☕ COFFEE BREAK</div>
+
+                <div class="modulo-header">MÓDULO 8: LAS REDES SOCIALES Y LA INTELIGENCIA ARTIFICIAL</div>
+                <div class="agenda-item"><span class="hora">15:30 - 15:50</span> <span class="charla">Comunicación
+                        médica en
+                        redes sociales: estrategias, alcance y límites.</span><span class="ponente">Dr. Enrique de
+                        Madaria
+                        (España)</span></div>
+                <div class="agenda-item"><span class="hora">15:50 - 16:10</span> <span class="charla">IA práctica en la
+                        consulta y en endoscopia: herramientas válidas y cómo integrarlas.</span><span
+                        class="ponente">Dr.
+                        José Bandera Quijano (México)</span></div>
+                <div class="agenda-item"><span class="hora">16:10 - 16:30</span> <span class="charla">Cómo usar las
+                        redes
+                        sociales y otras herramientas para hacer proyectos de investigación.</span><span
+                        class="ponente">Dr.
+                        Enrique de Madaria (España)</span></div>
+                <div class="agenda-item"><span class="hora">16:30 - 16:50</span> <span class="charla">Riesgos, ética y
+                        regulación: desinformación, privacidad y responsabilidad clínica al usar IA y redes.</span><span
+                        class="ponente">Dr. José Bandera Quijano (México)</span></div>
+                <div class="agenda-item"><span class="hora">16:50 - 17:10</span> <span class="charla">Panel de
+                        expertos</span><span class="ponente">Todos los ponentes del módulo</span></div>
             </div>
-            <div class="agenda-item"><span class="hora">08:40 - 09:00</span> <span class="charla">Terapias específicas
-                    nuevas y emergentes en MASLD</span><span class="ponente">Dra. Graciela Castro Narro (México)</span>
+
+            <div id="sabado" class="tab-content">
+                <h3 class="day-title">Sábado 1 de Agosto</h3>
+                <div class="modulo-header">MÓDULO 9: HEMORRAGIA DIGESTIVA</div>
+                <div class="agenda-item"><span class="hora">08:00 - 08:20</span> <span class="charla">Hemorragia
+                        digestiva
+                        alta en pacientes anticoagulados y adultos mayores: cómo actuar?</span><span class="ponente">Dr.
+                        Johny Cerna Cardona (México)</span></div>
+                <div class="agenda-item"><span class="hora">08:20 - 08:40</span> <span class="charla">Scores pronósticos
+                        en
+                        hemorragia digestiva alta: cuáles y cómo aplicarlos?</span></div>
+                <div class="agenda-item"><span class="hora">08:40 - 09:00</span> <span class="charla">Hemorragia de
+                        intestino medio ¿Cuándo solicitar exámenes y cuáles tenemos disponibles?</span></div>
+                <div class="agenda-item"><span class="hora">09:00 - 09:20</span> <span class="charla">Hay algo nuevo en
+                        el
+                        manejo de la hemorragia digestiva alta en 2026?</span><span class="ponente">Dr. Johny Cerna
+                        Cardona
+                        (México)</span></div>
+                <div class="agenda-item"><span class="hora">09:20 - 09:40</span> <span class="charla">Panel de
+                        expertos</span><span class="ponente">Todos los ponentes del módulo</span></div>
+
+                <div class="agenda-item comida">09:40 - 10:00 ☕ COFFEE BREAK</div>
+
+                <div class="modulo-header">MÓDULO 10: HEPATOLOGÍA</div>
+                <div class="agenda-item"><span class="hora">10:00 - 10:20</span> <span class="charla">Herramientas no
+                        invasivas para el diagnóstico de fibrosis hepática e hipertensión portal: tips de su uso en la
+                        práctica diaria</span><span class="ponente">Dra. Graciela Castro Narro (México)</span></div>
+                <div class="agenda-item"><span class="hora">10:20 - 10:40</span> <span class="charla">Nutrición y
+                        fragilidad
+                        en el paciente cirrótico: lo estamos tomando en cuenta en el consultorio?</span><span
+                        class="ponente">Dr. Francisco Barrera (Chile)</span></div>
+                <div class="agenda-item"><span class="hora">10:40 - 11:00</span> <span class="charla">El cirrótico con
+                        daño
+                        renal: cómo hacer el diagnóstico temprano y adoptar el manejo adecuado</span><span
+                        class="ponente">Dr. Francisco Barrera (Chile)</span></div>
+                <div class="agenda-item"><span class="hora">11:00 - 11:20</span> <span class="charla">Actualidades en el
+                        manejo de la ascitis</span></div>
+                <div class="agenda-item"><span class="hora">11:20 - 11:40</span> <span class="charla">Panel de
+                        expertos</span><span class="ponente">Todos los ponentes del módulo</span></div>
+
+                <div class="agenda-item"><span class="hora">11:40 - 12:00</span> <span class="charla">🎖️ SESIÓN DE
+                        CLAUSURA</span></div>
             </div>
-            <div class="agenda-item"><span class="hora">09:00 - 09:20</span> <span class="charla">Obesidad: lo que el
-                    gastroenterólogo debe saber</span><span class="ponente">Dr. Francisco Barrera (Chile)</span></div>
-            <div class="agenda-item"><span class="hora">09:20 - 09:40</span> <span class="charla">Panel de
-                    expertos</span><span class="ponente">Todos los ponentes del módulo</span></div>
-
-            <div class="agenda-item comida">09:40 - 10:00 ☕ COFFEE BREAK</div>
-
-            <div class="modulo-header">MÓDULO 6: ESTUDIOS DIAGNÓSTICOS EN NEUROGASTROENTEROLOGÍA</div>
-            <div class="agenda-item"><span class="hora">10:00 - 10:20</span> <span class="charla">Estudios diagnósticos
-                    para la disfagia orofaríngea</span><span class="ponente">Dr. Jorge Suazo Barahona (Honduras)</span>
-            </div>
-            <div class="agenda-item"><span class="hora">10:20 - 10:40</span> <span class="charla">pH-metría,
-                    pH-impedancia, Bravo: ¿Cuál, cómo y por qué?</span><span class="ponente">Dr. Luis Valdovinos García
-                    (México)</span></div>
-            <div class="agenda-item"><span class="hora">10:40 - 11:00</span> <span class="charla">Pruebas de aliento: lo
-                    que debemos saber</span><span class="ponente">Dr. Luis Valdovinos García (México)</span></div>
-            <div class="agenda-item"><span class="hora">11:00 - 11:20</span> <span class="charla">Manometría anorrectal:
-                    ¿cuándo, cómo y por qué?</span><span class="ponente">Dra. Laura Solé (Argentina)</span></div>
-            <div class="agenda-item"><span class="hora">11:20 - 11:40</span> <span class="charla">Rol del biofeedback en
-                    los trastornos anorrectales</span><span class="ponente">Dra. Laura Solé (Argentina)</span></div>
-            <div class="agenda-item"><span class="hora">11:40 - 12:00</span> <span class="charla">Panel de
-                    expertos</span><span class="ponente">Todos los ponentes del módulo</span></div>
-
-            <div class="modulo-header">🍽 SIMPOSIO COMIDA 2</div>
-            <div class="agenda-item comida"><span class="hora">12:00 - 13:30</span> <span
-                    class="charla">Probióticos</span><span class="ponente">Dr. Francisco Guarner</span></div>
-
-            <div class="modulo-header">MÓDULO 7: HELICOBACTER PYLORI Y CANCER GÁSTRICO</div>
-            <div class="agenda-item"><span class="hora">13:30 - 13:50</span> <span class="charla">Helicobacter pylori:
-                    Qué dicen las guías de manejo y qué es aplicable a nuestro medio</span></div>
-            <div class="agenda-item"><span class="hora">13:50 - 14:10</span> <span class="charla">Tratamiento de H.
-                    pylori: Errores frecuentes, opciones de rescate y cuándo detenerse</span></div>
-            <div class="agenda-item"><span class="hora">14:10 - 14:30</span> <span class="charla">Lesiones premalignas
-                    gástricas: ¿qué hacer y cada cuánto vigilar?</span><span class="ponente">Dr. Johny Cerna Cardona
-                    (México)</span></div>
-            <div class="agenda-item"><span class="hora">14:30 - 14:50</span> <span class="charla">Cáncer gástrico:
-                    detección oportuna y papel del médico no especialista</span></div>
-            <div class="agenda-item"><span class="hora">14:50 - 15:10</span> <span class="charla">Panel de
-                    Expertos</span><span class="ponente">Todos los ponentes del módulo</span></div>
-
-            <div class="agenda-item comida">15:10 - 15:30 ☕ COFFEE BREAK</div>
-
-            <div class="modulo-header">MÓDULO 8: LAS REDES SOCIALES Y LA INTELIGENCIA ARTIFICIAL</div>
-            <div class="agenda-item"><span class="hora">15:30 - 15:50</span> <span class="charla">Comunicación médica en
-                    redes sociales: estrategias, alcance y límites.</span><span class="ponente">Dr. Enrique de Madaria
-                    (España)</span></div>
-            <div class="agenda-item"><span class="hora">15:50 - 16:10</span> <span class="charla">IA práctica en la
-                    consulta y en endoscopia: herramientas válidas y cómo integrarlas.</span><span class="ponente">Dr.
-                    José Bandera Quijano (México)</span></div>
-            <div class="agenda-item"><span class="hora">16:10 - 16:30</span> <span class="charla">Cómo usar las redes
-                    sociales y otras herramientas para hacer proyectos de investigación.</span><span class="ponente">Dr.
-                    Enrique de Madaria (España)</span></div>
-            <div class="agenda-item"><span class="hora">16:30 - 16:50</span> <span class="charla">Riesgos, ética y
-                    regulación: desinformación, privacidad y responsabilidad clínica al usar IA y redes.</span><span
-                    class="ponente">Dr. José Bandera Quijano (México)</span></div>
-            <div class="agenda-item"><span class="hora">16:50 - 17:10</span> <span class="charla">Panel de
-                    expertos</span><span class="ponente">Todos los ponentes del módulo</span></div>
-        </div>
-
-        <div id="sabado" class="tab-content">
-            <h3 class="day-title">Sábado 1 de Agosto</h3>
-            <div class="modulo-header">MÓDULO 9: HEMORRAGIA DIGESTIVA</div>
-            <div class="agenda-item"><span class="hora">08:00 - 08:20</span> <span class="charla">Hemorragia digestiva
-                    alta en pacientes anticoagulados y adultos mayores: cómo actuar?</span><span class="ponente">Dr.
-                    Johny Cerna Cardona (México)</span></div>
-            <div class="agenda-item"><span class="hora">08:20 - 08:40</span> <span class="charla">Scores pronósticos en
-                    hemorragia digestiva alta: cuáles y cómo aplicarlos?</span></div>
-            <div class="agenda-item"><span class="hora">08:40 - 09:00</span> <span class="charla">Hemorragia de
-                    intestino medio ¿Cuándo solicitar exámenes y cuáles tenemos disponibles?</span></div>
-            <div class="agenda-item"><span class="hora">09:00 - 09:20</span> <span class="charla">Hay algo nuevo en el
-                    manejo de la hemorragia digestiva alta en 2026?</span><span class="ponente">Dr. Johny Cerna Cardona
-                    (México)</span></div>
-            <div class="agenda-item"><span class="hora">09:20 - 09:40</span> <span class="charla">Panel de
-                    expertos</span><span class="ponente">Todos los ponentes del módulo</span></div>
-
-            <div class="agenda-item comida">09:40 - 10:00 ☕ COFFEE BREAK</div>
-
-            <div class="modulo-header">MÓDULO 10: HEPATOLOGÍA</div>
-            <div class="agenda-item"><span class="hora">10:00 - 10:20</span> <span class="charla">Herramientas no
-                    invasivas para el diagnóstico de fibrosis hepática e hipertensión portal: tips de su uso en la
-                    práctica diaria</span><span class="ponente">Dra. Graciela Castro Narro (México)</span></div>
-            <div class="agenda-item"><span class="hora">10:20 - 10:40</span> <span class="charla">Nutrición y fragilidad
-                    en el paciente cirrótico: lo estamos tomando en cuenta en el consultorio?</span><span
-                    class="ponente">Dr. Francisco Barrera (Chile)</span></div>
-            <div class="agenda-item"><span class="hora">10:40 - 11:00</span> <span class="charla">El cirrótico con daño
-                    renal: cómo hacer el diagnóstico temprano y adoptar el manejo adecuado</span><span
-                    class="ponente">Dr. Francisco Barrera (Chile)</span></div>
-            <div class="agenda-item"><span class="hora">11:00 - 11:20</span> <span class="charla">Actualidades en el
-                    manejo de la ascitis</span></div>
-            <div class="agenda-item"><span class="hora">11:20 - 11:40</span> <span class="charla">Panel de
-                    expertos</span><span class="ponente">Todos los ponentes del módulo</span></div>
-
-            <div class="agenda-item"><span class="hora">11:40 - 12:00</span> <span class="charla">🎖️ SESIÓN DE
-                    CLAUSURA</span></div>
-        </div>
         </div> <!-- Close panel for Programa Adultos -->
 
         <button class="accordion" onclick="toggleAccordion('programa-pediatria')">Programa Pediatría</button>
@@ -967,7 +1012,7 @@
         function toggleAccordion(id) {
             const panel = document.getElementById(id);
             const btn = document.querySelector(`button[onclick="toggleAccordion('${id}')"]`);
-            
+
             if (panel.style.display === "block") {
                 panel.style.display = "none";
                 btn.classList.remove("active");
@@ -1173,13 +1218,13 @@
         // Agregar botones de acción a las charlas
         document.querySelectorAll('.agenda-item').forEach(item => {
             const t = item.innerText.toLowerCase();
-            const omitirBotones = item.classList.contains('comida') || 
-                                  t.includes('registro') || 
-                                  t.includes('inauguraci') || 
-                                  t.includes('clausura') || 
-                                  t.includes('bienvenida') ||
-                                  t.includes('transici');
-            
+            const omitirBotones = item.classList.contains('comida') ||
+                t.includes('registro') ||
+                t.includes('inauguraci') ||
+                t.includes('clausura') ||
+                t.includes('bienvenida') ||
+                t.includes('transici');
+
             if (!omitirBotones) {
                 const actionsDiv = document.createElement('div');
                 actionsDiv.className = 'agenda-actions';
