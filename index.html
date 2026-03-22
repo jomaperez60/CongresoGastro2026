@@ -694,6 +694,10 @@
             transition: transform 0.2s, box-shadow 0.2s;
         }
 
+        .speaker-card {
+            cursor: pointer;
+        }
+
         .speaker-card:hover,
         .aval-card:hover {
             transform: translateY(-3px);
@@ -998,52 +1002,52 @@
     <div class="container" id="speakers">
         <h2>Invitados Internacionales</h2>
         <div class="speaker-grid">
-            <div class="speaker-card">
+            <div class="speaker-card" onclick="abrirModalSpeaker(this, 'Ignacio Hanna')">
                 <img src="img/speakers/ignacio_hanna.jpg" class="speaker-photo" alt="Dr. Ignacio Hanna J."
                     loading="lazy">
                 <h4>Dr. Ignacio Hanna J.</h4>
                 <p>Ecuador</p>
             </div>
-            <div class="speaker-card">
+            <div class="speaker-card" onclick="abrirModalSpeaker(this, 'Laura Solé')">
                 <img src="img/speakers/laura_sole.jpg" class="speaker-photo" alt="Dra. Laura Solé" loading="lazy">
                 <h4>Dra. Laura Solé</h4>
                 <p>Argentina</p>
             </div>
-            <div class="speaker-card">
+            <div class="speaker-card" onclick="abrirModalSpeaker(this, 'Luis Valdovinos')">
                 <img src="img/speakers/luis_valdovinos.jpg" class="speaker-photo" alt="Dr. Luis Valdovinos"
                     loading="lazy">
                 <h4>Dr. Luis Valdovinos G.</h4>
                 <p>México</p>
             </div>
-            <div class="speaker-card">
+            <div class="speaker-card" onclick="abrirModalSpeaker(this, 'Enrique de Madaria')">
                 <img src="img/speakers/enrique_demadaria.jpg" class="speaker-photo" alt="Dr. Enrique de Madaria"
                     loading="lazy">
                 <h4>Dr. Enrique de Madaria</h4>
                 <p>España</p>
             </div>
-            <div class="speaker-card">
+            <div class="speaker-card" onclick="abrirModalSpeaker(this, 'Graciela Castro')">
                 <img src="img/speakers/graciela_castro.png" class="speaker-photo" alt="Dra. Graciela Castro"
                     loading="lazy">
                 <h4>Dra. Graciela Castro N.</h4>
                 <p>México</p>
             </div>
-            <div class="speaker-card">
+            <div class="speaker-card" onclick="abrirModalSpeaker(this, 'Francisco Barrera')">
                 <img src="img/speakers/francisco_barrera.jpg" class="speaker-photo" alt="Dr. Francisco Barrera"
                     loading="lazy">
                 <h4>Dr. Francisco Barrera</h4>
                 <p>Chile</p>
             </div>
-            <div class="speaker-card">
+            <div class="speaker-card" onclick="abrirModalSpeaker(this, 'Johny Cerna')">
                 <img src="img/speakers/johny_cerna.jpg" class="speaker-photo" alt="Dr. Johny Cerna" loading="lazy">
                 <h4>Dr. Johny Cerna C.</h4>
                 <p>México</p>
             </div>
-            <div class="speaker-card">
+            <div class="speaker-card" onclick="abrirModalSpeaker(this, 'José Bandera')">
                 <img src="img/speakers/jose_bandera.jpg" class="speaker-photo" alt="Dr. José Bandera Q." loading="lazy">
                 <h4>Dr. José Bandera Q.</h4>
                 <p>México</p>
             </div>
-            <div class="speaker-card">
+            <div class="speaker-card" onclick="abrirModalSpeaker(this, 'Francisco Guarner')">
                 <img src="img/speakers/francisco_guarner.jpg" class="speaker-photo" alt="Dr. Francisco Guarner"
                     loading="lazy">
                 <h4>Dr. Francisco Guarner</h4>
@@ -1163,6 +1167,26 @@
             </div>
 
             <button class="btn-submit" onclick="enviarFeedback()">Mandar Feedback</button>
+        </div>
+    </div>
+
+    <!-- Modal Speaker HTML -->
+    <div id="speakerModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="cerrarSpeakerModal()">&times;</span>
+            <div style="text-align: center;">
+                <img id="speakerModalPhoto" src="" class="speaker-photo" style="width: 120px; height: 120px; margin-bottom: 15px; display: none;">
+                <h3 id="speakerModalName">Nombre del Ponente</h3>
+                <p id="speakerModalCountry" style="color: #666; font-style: italic; margin-bottom: 15px;"></p>
+            </div>
+            
+            <div class="modulo-header" style="margin-top: 10px;">Biografía</div>
+            <p id="speakerModalBio" style="font-size: 0.95rem; line-height: 1.5; text-align: justify;"></p>
+            
+            <div class="modulo-header">Sus Charlas en el Congreso</div>
+            <ul id="speakerModalTalks" style="padding-left: 20px; font-size: 0.9rem; line-height: 1.4;">
+                <!-- Charlas generadas dinámicamente -->
+            </ul>
         </div>
     </div>
 
@@ -1295,9 +1319,62 @@
             modal.style.display = 'none';
         }
 
+        // Lógica del Speaker Modal
+        function abrirModalSpeaker(cardElement, keyword) {
+            const nombre = cardElement.querySelector('h4').innerText;
+            const pais = cardElement.querySelector('p').innerText;
+            const imgSrc = cardElement.querySelector('img').src;
+
+            document.getElementById('speakerModalName').innerText = nombre;
+            document.getElementById('speakerModalCountry').innerText = pais;
+            
+            const imgEl = document.getElementById('speakerModalPhoto');
+            if(imgSrc) {
+                imgEl.src = imgSrc;
+                imgEl.style.display = 'block';
+            } else {
+                imgEl.style.display = 'none';
+            }
+
+            document.getElementById('speakerModalBio').innerText = "Próximamente estaremos publicando la biografía resumida de nuestro invitado internacional.";
+
+            // Buscar charlas en la agenda
+            const talksList = document.getElementById('speakerModalTalks');
+            talksList.innerHTML = '';
+            let found = false;
+
+            document.querySelectorAll('.agenda-item').forEach(item => {
+                const ponenteEl = item.querySelector('.ponente');
+                if (ponenteEl && ponenteEl.innerText.toLowerCase().includes(keyword.toLowerCase())) {
+                    const charlaEl = item.querySelector('.charla');
+                    if (charlaEl) {
+                        const li = document.createElement('li');
+                        li.innerText = charlaEl.innerText;
+                        li.style.marginBottom = '8px';
+                        talksList.appendChild(li);
+                        found = true;
+                    }
+                }
+            });
+
+            if (!found) {
+                talksList.innerHTML = '<li style="color: #888;">No se encontraron charlas asignadas aún o figuran como panel.</li>';
+            }
+
+            document.getElementById('speakerModal').style.display = 'block';
+        }
+
+        function cerrarSpeakerModal() {
+            document.getElementById('speakerModal').style.display = 'none';
+        }
+
         window.onclick = function (event) {
+            const speakerModal = document.getElementById('speakerModal');
             if (event.target == modal) {
                 cerrarModal();
+            }
+            if (event.target == speakerModal) {
+                cerrarSpeakerModal();
             }
         }
 
