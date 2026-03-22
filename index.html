@@ -1357,9 +1357,24 @@
                     if (textoPonente.includes(searchKey)) {
                         const charlaEl = item.querySelector('.charla');
                         if (charlaEl) {
+                            const horaEl = item.querySelector('.hora');
+                            const tabParent = item.closest('.tab-content');
+                            const diaEl = tabParent ? tabParent.querySelector('.day-title') : null;
+                            
+                            const charlaText = charlaEl.textContent.replace(/\s+/g, ' ').trim();
+                            const horaText = horaEl ? horaEl.textContent.trim() : '';
+                            const diaText = diaEl ? diaEl.textContent.trim() : '';
+                            
+                            let dateInfoHtml = '';
+                            if (diaText && horaText) {
+                                dateInfoHtml = `<div style="font-size: 0.8rem; color: #666; font-weight: bold; margin-bottom: 2px;">📅 ${diaText} &nbsp;|&nbsp; ⏰ ${horaText}</div>`;
+                            } else if (horaText) {
+                                dateInfoHtml = `<div style="font-size: 0.8rem; color: #666; font-weight: bold; margin-bottom: 2px;">⏰ ${horaText}</div>`;
+                            }
+
                             const li = document.createElement('li');
-                            li.innerText = charlaEl.textContent.replace(/\s+/g, ' ').trim();
-                            li.style.marginBottom = '8px';
+                            li.innerHTML = `${dateInfoHtml}<div style="font-weight: 500;">${charlaText}</div>`;
+                            li.style.marginBottom = '15px';
                             talksList.appendChild(li);
                             found = true;
                         }
