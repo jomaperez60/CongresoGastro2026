@@ -323,13 +323,16 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(5px);
-            overflow-y: auto; /* Habilita el desplazamiento vertical */
-            padding-bottom: 40px; /* Evita que el botón quede pegado al final */
+            overflow-y: auto;
+            /* Habilita el desplazamiento vertical */
+            padding-bottom: 40px;
+            /* Evita que el botón quede pegado al final */
         }
 
         .modal-content {
             background-color: var(--fondo-tarjeta);
-            margin: 5% auto; /* Subimos la ventana para dar más espacio */
+            margin: 5% auto;
+            /* Subimos la ventana para dar más espacio */
             padding: 25px;
             border-radius: 12px;
             width: 90%;
@@ -861,7 +864,8 @@
             <div class="form-group" style="text-align: center;">
                 <p style="margin-bottom: 15px; font-size: 0.95rem; color: #555;">Pasa al panel interactivo para hacer
                     preguntas en vivo al moderador y votar por las mejores preguntas del público.</p>
-                <a href="https://app.sli.do/" target="_blank" class="btn-slido">Hacer Pregunta en Vivo (Slido)</a>
+                <a href="https://app.sli.do/event/6rpxnK96rLoqEW9HHD326w" target="_blank" class="btn-slido">Hacer
+                    Pregunta en Vivo (Slido)</a>
                 <hr style="border: 0; border-top: 1px solid #ddd; margin: 25px 0;">
             </div>
 
@@ -1066,7 +1070,7 @@
             const form = document.createElement('form');
             form.method = 'POST';
             form.action = 'https://formsubmit.co/' + FORMSUBMIT_EMAIL;
-            
+
             const next = document.createElement('input');
             next.type = 'hidden';
             next.name = '_next';
