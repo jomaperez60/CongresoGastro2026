@@ -323,11 +323,13 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(5px);
+            overflow-y: auto; /* Habilita el desplazamiento vertical */
+            padding-bottom: 40px; /* Evita que el botón quede pegado al final */
         }
 
         .modal-content {
             background-color: var(--fondo-tarjeta);
-            margin: 10% auto;
+            margin: 5% auto; /* Subimos la ventana para dar más espacio */
             padding: 25px;
             border-radius: 12px;
             width: 90%;
