@@ -28,7 +28,8 @@
             background-color: var(--gris-claro);
             color: var(--texto-oscuro);
             transition: background-color 0.3s, color 0.3s;
-            padding-bottom: 80px; /* Espacio para el bottom nav */
+            padding-bottom: 80px;
+            /* Espacio para el bottom nav */
         }
 
         header {
@@ -62,7 +63,7 @@
             font-size: 1.2rem;
             font-weight: bold;
             font-family: 'Arial Narrow', sans-serif;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
             line-height: 1.2;
         }
 
@@ -78,7 +79,7 @@
             border-radius: 50%;
             background: white;
             padding: 2px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
             object-fit: contain;
         }
 
@@ -97,7 +98,7 @@
             font-family: 'Times New Roman', Times, serif;
             margin: 10px 0;
             letter-spacing: 0.5px;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
         }
 
         @media (max-width: 768px) {
@@ -105,16 +106,20 @@
                 flex-direction: column;
                 text-align: center;
             }
+
             .header-orgs {
                 text-align: center;
                 margin-bottom: 15px;
             }
+
             .header-orgs p {
                 font-size: 1.1rem;
             }
+
             .header-logo {
                 height: 50px;
             }
+
             .header-bottom h1 {
                 font-size: 1.3rem;
             }
@@ -126,14 +131,15 @@
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-            padding: 10px 10px 15px 10px; /* Padding extra para iOS */
+            padding: 10px 10px 15px 10px;
+            /* Padding extra para iOS */
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
             z-index: 2000;
             box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
-            border-top: 1px solid rgba(255,255,255,0.3);
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
             transition: 0.3s;
             overflow-x: auto;
             white-space: nowrap;
@@ -142,7 +148,7 @@
 
         body.dark-theme nav {
             background: rgba(30, 30, 30, 0.85);
-            border-top: 1px solid rgba(255,255,255,0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         nav a {
@@ -162,7 +168,8 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        nav a:hover, nav a:active {
+        nav a:hover,
+        nav a:active {
             transform: scale(1.05);
             color: var(--verde-exito);
         }
@@ -657,8 +664,8 @@
             bottom: 30px;
             font-size: 0.95rem;
             font-weight: bold;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            border: 1px solid rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(0, 0, 0, 0.1);
             opacity: 0;
             transition: opacity 0.3s, bottom 0.3s, visibility 0.3s;
         }
@@ -670,7 +677,7 @@
         }
 
         body.dark-theme .toast {
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         /* Glassmorphism en Modal */
@@ -681,12 +688,16 @@
         }
 
         /* Micro-animaciones Cards */
-        .speaker-card, .aval-card, .agenda-item {
+        .speaker-card,
+        .aval-card,
+        .agenda-item {
             transition: transform 0.2s, box-shadow 0.2s;
         }
-        .speaker-card:hover, .aval-card:hover {
+
+        .speaker-card:hover,
+        .aval-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
@@ -722,11 +733,11 @@
     </div>
 
     <nav>
-        <a href="#agenda" onclick="verTodos()"><span class="icon">📅</span>Agenda</a>
-        <a href="#speakers" onclick="verTodos()"><span class="icon">👨‍⚕️</span>Ponentes</a>
-        <a href="#avales" onclick="verTodos()"><span class="icon">📜</span>Avales</a>
-        <a href="javascript:void(0)" onclick="mostrarFavoritos()"><span class="icon" id="nav-fav">⭐</span>Mis Favs</a>
-        <a href="#venue" onclick="verTodos()"><span class="icon">🏨</span>Sede</a>
+        <a href="#agenda"><span class="icon">📅</span>Agenda</a>
+        <a href="#speakers"><span class="icon">👨‍⚕️</span>Ponentes</a>
+        <a href="#avales"><span class="icon">📜</span>Avales</a>
+        <a href="#venue"><span class="icon">🏨</span>Sede</a>
+        <a href="#register"><span class="icon">📝</span>Registro</a>
         <a href="javascript:void(0)" id="btnInstall" style="display:none;"><span class="icon">📲</span>Instalar</a>
     </nav>
 
@@ -985,7 +996,7 @@
     </div>
 
     <div class="container" id="speakers">
-        <h2>Cuerpo Docente Internacional</h2>
+        <h2>Invitados Internacionales</h2>
         <div class="speaker-grid">
             <div class="speaker-card">
                 <img src="img/speakers/ignacio_hanna.jpg" class="speaker-photo" alt="Dr. Ignacio Hanna J."
@@ -1387,62 +1398,7 @@
             }
         });
 
-        // Mis Favoritos Logic
-        let misFavoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
-
-        function toggleFavorito(btn, title) {
-            if (misFavoritos.includes(title)) {
-                misFavoritos = misFavoritos.filter(f => f !== title);
-                btn.innerHTML = "🤍 Guardar";
-                btn.style.background = "#6c757d";
-                showToast("Charla removida de tu agenda");
-            } else {
-                misFavoritos.push(title);
-                btn.innerHTML = "❤️ Guardado";
-                btn.style.background = "#dc3545";
-                showToast("Charla añadida a tu agenda");
-            }
-            localStorage.setItem('favoritos', JSON.stringify(misFavoritos));
-        }
-
-        function mostrarFavoritos() {
-            document.body.classList.add('searching');
-            document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'block');
-            document.querySelectorAll('.day-title, .modulo-header, .speaker-card').forEach(el => el.style.display = 'none');
-            
-            let tieneFavs = false;
-            document.querySelectorAll('.agenda-item').forEach(item => {
-                const charlaEl = item.querySelector('.charla');
-                if (charlaEl && misFavoritos.includes(charlaEl.innerText.trim())) {
-                    item.classList.remove('hidden');
-                    tieneFavs = true;
-                } else {
-                    item.classList.add('hidden');
-                }
-            });
-
-            if (!tieneFavs) showToast("Aún no tienes charlas guardadas");
-
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById('nav-fav').parentElement.style.color = 'var(--verde-exito)';
-        }
-
-        function verTodos() {
-            document.getElementById('nav-fav').parentElement.style.color = '';
-            const searchInput = document.getElementById('appSearch');
-            searchInput.value = '';
-            document.body.classList.remove('searching');
-            document.querySelectorAll('.hidden').forEach(el => el.classList.remove('hidden'));
-            document.querySelectorAll('.day-title, .modulo-header, .speaker-card').forEach(el => el.style.display = '');
-            
-            // Volver al tab activo o al primero
-            let activa = document.querySelector('.tab-btn.active');
-            if(!activa) {
-                const tabs = document.querySelectorAll('.tab-btn');
-                if(tabs.length > 0) activa = tabs[0];
-            }
-            if(activa) activa.click();
-        }
+        // 
 
         // Agregar botones de acción a las charlas
         document.querySelectorAll('.agenda-item').forEach(item => {
@@ -1460,25 +1416,13 @@
                 actionsDiv.innerHTML = `
                     <a href="https://app.sli.do/event/6rpxnK96rLoqEW9HHD326w" target="_blank" class="action-icon slido" title="Hacer pregunta en vivo">🗯️ Preguntas</a>
                     <button class="action-icon eval" title="Evaluar charla">⭐ Evaluar</button>
-                    <button class="action-icon fav" title="Guardar charla" style="background: #6c757d;">🤍 Guardar</button>
                 `;
                 item.appendChild(actionsDiv);
 
-                const charlaEl = item.querySelector('.charla');
-                const titulo = charlaEl ? charlaEl.innerText.trim() : 'Charla';
-
-                const favBtn = actionsDiv.querySelector('.fav');
-                if (misFavoritos.includes(titulo)) {
-                    favBtn.innerHTML = "❤️ Guardado";
-                    favBtn.style.background = "#dc3545";
-                }
-
-                favBtn.addEventListener('click', () => {
-                    toggleFavorito(favBtn, titulo);
-                });
-
                 const evalBtn = actionsDiv.querySelector('.eval');
                 evalBtn.addEventListener('click', () => {
+                    const charlaEl = item.querySelector('.charla');
+                    const titulo = charlaEl ? charlaEl.innerText.trim() : 'Charla';
                     const ponenteEl = item.querySelector('.ponente');
                     const ponente = ponenteEl ? ponenteEl.innerText : '';
                     abrirModal(titulo, ponente);
