@@ -1,10 +1,10 @@
 {
-  "name": "Congreso Médico 2026",
-  "short_name": "MedCong26",
+  "name": "GastroHn26",
+  "short_name": "GastroHn26",
   "start_url": "index.html",
   "display": "standalone",
-  "background_color": "#0056b3",
-  "theme_color": "#0056b3",
+  "background_color": "#1c387b",
+  "theme_color": "#1c387b",
   "icons": [
     { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
