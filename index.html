@@ -31,34 +31,92 @@
         }
 
         header {
-            background: var(--azul-primario);
+            background: linear-gradient(180deg, #10204b 0%, #1c387b 50%, #10204b 100%);
             color: white;
-            padding: 2.5rem 1rem;
+            padding: 20px 15px;
             text-align: center;
+            border-bottom: 3px solid #d4af37;
         }
 
-        header h1 {
+        .header-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            gap: 15px;
+        }
+
+        .header-orgs {
+            text-align: left;
+            flex: 1;
+        }
+
+        .header-orgs p {
+            margin: 3px 0;
             font-size: 1.2rem;
-            text-transform: uppercase;
-            margin: 0;
-            line-height: 1.4;
+            font-weight: bold;
+            font-family: 'Arial Narrow', sans-serif;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+            line-height: 1.2;
         }
 
-        header h2 {
-            font-size: 1rem;
+        .header-logos {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .header-logo {
+            height: 60px;
+            width: auto;
+            border-radius: 50%;
+            background: white;
+            padding: 2px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            object-fit: contain;
+        }
+
+        .header-separator {
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, #d4af37 20%, #fdf0a6 50%, #d4af37 80%, transparent 100%);
+            margin: 15px auto;
+            width: 95%;
+            border-radius: 50%;
+            opacity: 0.8;
+        }
+
+        .header-bottom h1 {
+            font-size: 1.6rem;
             font-weight: normal;
+            font-family: 'Times New Roman', Times, serif;
             margin: 10px 0;
-            font-style: italic;
-            opacity: 0.9;
+            letter-spacing: 0.5px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
         }
 
-        .reconocimiento {
-            font-size: 0.85rem;
-            background: rgba(255, 255, 255, 0.15);
-            padding: 6px 15px;
-            border-radius: 20px;
-            display: inline-block;
-            margin-top: 10px;
+        @media (max-width: 768px) {
+            .header-top {
+                flex-direction: column;
+                text-align: center;
+            }
+            .header-orgs {
+                text-align: center;
+                margin-bottom: 15px;
+            }
+            .header-orgs p {
+                font-size: 1.1rem;
+            }
+            .header-logo {
+                height: 50px;
+            }
+            .header-bottom h1 {
+                font-size: 1.3rem;
+            }
         }
 
         nav {
@@ -567,9 +625,27 @@
 <body>
 
     <header>
-        <h1>XVII Congreso Internacional de Gastroenterología y VII de Gastropediatría 2026</h1>
-        <h2>“DESAFÍOS GLOBALES, PERSPECTIVAS LOCALES EN GASTROENTEROLOGÍA”</h2>
-        <div class="reconocimiento">Dr. Enrique Martínez Reina</div>
+        <div class="header-content">
+            <div class="header-top">
+                <div class="header-orgs">
+                    <p>Colegio Médico de Honduras</p>
+                    <p>Centro Nacional de Educación Médica Continua</p>
+                    <p>Asociación Hondureña de Gastroenterología</p>
+                </div>
+                <div class="header-logos">
+                    <img src="img/avales/cmh.png" alt="CMH" class="header-logo">
+                    <img src="img/avales/cenemec.png" alt="CENEMEC" class="header-logo">
+                    <img src="img/avales/ahg.png" alt="AHG" class="header-logo">
+                </div>
+            </div>
+            <div class="header-separator"></div>
+            <div class="header-bottom">
+                <h1>XVII Congreso Internacional de Gastroenterología</h1>
+                <div class="header-separator"></div>
+                <h1>VII Congreso Internacional de Gastroenterología Pediátrica</h1>
+                <div class="header-separator"></div>
+            </div>
+        </div>
     </header>
 
     <div class="search-box">
