@@ -27,7 +27,8 @@
             margin: 0;
             background-color: var(--gris-claro);
             color: var(--texto-oscuro);
-            transition: 0.3s;
+            transition: background-color 0.3s, color 0.3s;
+            padding-bottom: 80px; /* Espacio para el bottom nav */
         }
 
         header {
@@ -121,23 +122,50 @@
 
         nav {
             display: flex;
-            justify-content: center;
-            background: var(--fondo-tarjeta);
-            padding: 0.8rem;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            overflow-x: auto;
+            justify-content: space-around;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 10px 0 15px 0; /* Padding extra para iOS */
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 2000;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            border-top: 1px solid rgba(255,255,255,0.3);
+            transition: 0.3s;
+        }
+
+        body.dark-theme nav {
+            background: rgba(30, 30, 30, 0.85);
+            border-top: 1px solid rgba(255,255,255,0.1);
         }
 
         nav a {
-            margin: 0 10px;
+            flex: 1;
             text-decoration: none;
             color: var(--azul-primario);
-            font-weight: bold;
-            font-size: 0.85rem;
-            white-space: nowrap;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 5px;
+            transition: 0.2s;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        nav a:hover, nav a:active {
+            transform: scale(1.05);
+            color: var(--verde-exito);
+        }
+
+        nav a span.icon {
+            font-size: 1.3rem;
+            pointer-events: none;
         }
 
         .search-box {
@@ -609,15 +637,52 @@
             box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);
         }
 
-
-
-        /* Clickeable Agenda Items */
-        .agenda-item {
-            transition: background 0.2s;
+        /* Toast Notifications */
+        .toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: var(--fondo-tarjeta);
+            color: var(--texto-oscuro);
+            text-align: center;
+            border-radius: 30px;
+            padding: 16px;
+            position: fixed;
+            z-index: 3000;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 30px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border: 1px solid rgba(0,0,0,0.1);
+            opacity: 0;
+            transition: opacity 0.3s, bottom 0.3s, visibility 0.3s;
         }
 
-        .agenda-item:not(.comida):hover {
-            background: rgba(0, 86, 179, 0.05);
+        .toast.show {
+            visibility: visible;
+            opacity: 1;
+            bottom: 90px;
+        }
+
+        body.dark-theme .toast {
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Glassmorphism en Modal */
+        .modal {
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        /* Micro-animaciones Cards */
+        .speaker-card, .aval-card, .agenda-item {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .speaker-card:hover, .aval-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
         }
     </style>
 </head>
@@ -653,11 +718,11 @@
     </div>
 
     <nav>
-        <a href="#agenda">Agenda</a>
-        <a href="#speakers">Ponentes</a>
-        <a href="#avales">Avales</a>
-        <a href="#venue">Sede</a>
-        <a href="#register">Registro</a>
+        <a href="#agenda" onclick="verTodos()"><span class="icon">📅</span>Agenda</a>
+        <a href="#speakers"><span class="icon">👨‍⚕️</span>Ponentes</a>
+        <a href="javascript:void(0)" onclick="mostrarFavoritos()"><span class="icon" id="nav-fav">⭐</span>Mis Favs</a>
+        <a href="#venue"><span class="icon">🏨</span>Sede</a>
+        <a href="javascript:void(0)" id="btnInstall" style="display:none;"><span class="icon">📲</span>Instalar</a>
     </nav>
 
     <div class="container" id="agenda">
@@ -1085,6 +1150,9 @@
         </div>
     </div>
 
+    <!-- Toast Container -->
+    <div id="toast" class="toast">Mensaje Toast</div>
+
     <script>
         function toggleAccordion(id) {
             const panel = document.getElementById(id);
@@ -1239,7 +1307,7 @@
             const ponente = document.getElementById('modalSpeaker').innerText;
 
             if (currentRatings.tema === 0 && currentRatings.expositor === 0 && currentRatings.relevancia === 0) {
-                alert("Por favor selecciona al menos una estrella para evaluar la sesión.");
+                showToast("Selecciona al menos una estrella para evaluar la sesión.");
                 return;
             }
 
@@ -1257,7 +1325,7 @@
             };
 
             if (GOOGLE_SCRIPT_URL === "URL_DE_TU_SCRIPT_AQUI" || GOOGLE_SCRIPT_URL === "") {
-                alert("¡Simulación Exitosa!\nHas asignado las estrellas correctamente.\n\n(Recuerda pegar la URL de tu Google Apps Script en el código de index.html para enviar los datos reales a Google Sheets).");
+                showToast("Simulación Exitosa (No se enviaron datos a Sheets)");
                 cerrarModal();
                 btn.innerText = originalText;
                 btn.disabled = false;
@@ -1273,16 +1341,100 @@
                 },
                 body: JSON.stringify(payload)
             }).then(() => {
-                alert("¡Evaluación enviada con éxito! Gracias por tu feedback.");
+                showToast("¡Evaluación enviada con éxito! Gracias.");
                 cerrarModal();
                 btn.innerText = originalText;
                 btn.disabled = false;
             }).catch(error => {
                 console.error('Error al enviar:', error);
-                alert("Hubo un error al enviar la evaluación. Inténtalo más tarde.");
+                showToast("Hubo un error al enviar la evaluación.");
                 btn.innerText = originalText;
                 btn.disabled = false;
             });
+        }
+
+        // Toast Notification System
+        function showToast(message) {
+            const toast = document.getElementById("toast");
+            toast.innerText = message;
+            toast.className = "toast show";
+            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
+        }
+
+        // Install PWA Logic
+        let deferredPrompt;
+        const btnInstall = document.getElementById('btnInstall');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            btnInstall.style.display = 'flex'; // Show install button in nav
+        });
+
+        btnInstall.addEventListener('click', async () => {
+            if (deferredPrompt !== null) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    btnInstall.style.display = 'none';
+                }
+                deferredPrompt = null;
+            }
+        });
+
+        // Mis Favoritos Logic
+        let misFavoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+
+        function toggleFavorito(btn, title) {
+            if (misFavoritos.includes(title)) {
+                misFavoritos = misFavoritos.filter(f => f !== title);
+                btn.innerHTML = "🤍 Guardar";
+                btn.style.background = "#6c757d";
+                showToast("Charla removida de tu agenda");
+            } else {
+                misFavoritos.push(title);
+                btn.innerHTML = "❤️ Guardado";
+                btn.style.background = "#dc3545";
+                showToast("Charla añadida a tu agenda");
+            }
+            localStorage.setItem('favoritos', JSON.stringify(misFavoritos));
+        }
+
+        function mostrarFavoritos() {
+            document.body.classList.add('searching');
+            document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'block');
+            document.querySelectorAll('.day-title, .modulo-header, .speaker-card').forEach(el => el.style.display = 'none');
+            
+            let tieneFavs = false;
+            document.querySelectorAll('.agenda-item').forEach(item => {
+                if (item.classList.contains('comida')) {
+                    item.classList.add('hidden');
+                    return;
+                }
+                const charlaEl = item.querySelector('.charla');
+                if (charlaEl && misFavoritos.includes(charlaEl.innerText)) {
+                    item.classList.remove('hidden');
+                    tieneFavs = true;
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+
+            if (!tieneFavs) showToast("Aún no tienes charlas guardadas");
+
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('nav-fav').parentElement.style.color = 'var(--verde-exito)';
+        }
+
+        function verTodos() {
+            document.getElementById('nav-fav').parentElement.style.color = '';
+            const searchInput = document.getElementById('appSearch');
+            searchInput.value = '';
+            document.body.classList.remove('searching');
+            document.querySelectorAll('.hidden').forEach(el => el.classList.remove('hidden'));
+            document.querySelectorAll('.day-title, .modulo-header, .speaker-card').forEach(el => el.style.display = '');
+            const activa = document.querySelector('.tab-btn.active') || document.querySelector('.tab-btn');
+            if(activa) activa.click();
         }
 
         // Agregar botones de acción a las charlas
@@ -1301,13 +1453,25 @@
                 actionsDiv.innerHTML = `
                     <a href="https://app.sli.do/event/6rpxnK96rLoqEW9HHD326w" target="_blank" class="action-icon slido" title="Hacer pregunta en vivo">🗯️ Preguntas</a>
                     <button class="action-icon eval" title="Evaluar charla">⭐ Evaluar</button>
+                    <button class="action-icon fav" title="Guardar charla" style="background: #6c757d;">🤍 Guardar</button>
                 `;
                 item.appendChild(actionsDiv);
 
+                const charlaEl = item.querySelector('.charla');
+                const titulo = charlaEl ? charlaEl.innerText : 'Charla';
+
+                const favBtn = actionsDiv.querySelector('.fav');
+                if (misFavoritos.includes(titulo)) {
+                    favBtn.innerHTML = "❤️ Guardado";
+                    favBtn.style.background = "#dc3545";
+                }
+
+                favBtn.addEventListener('click', () => {
+                    toggleFavorito(favBtn, titulo);
+                });
+
                 const evalBtn = actionsDiv.querySelector('.eval');
                 evalBtn.addEventListener('click', () => {
-                    const charlaEl = item.querySelector('.charla');
-                    const titulo = charlaEl ? charlaEl.innerText : 'Charla';
                     const ponenteEl = item.querySelector('.ponente');
                     const ponente = ponenteEl ? ponenteEl.innerText : '';
                     abrirModal(titulo, ponente);
