@@ -122,11 +122,11 @@
 
         nav {
             display: flex;
-            justify-content: space-around;
+            justify-content: flex-start;
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-            padding: 10px 0 15px 0; /* Padding extra para iOS */
+            padding: 10px 10px 15px 10px; /* Padding extra para iOS */
             position: fixed;
             bottom: 0;
             left: 0;
@@ -135,6 +135,9 @@
             box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
             border-top: 1px solid rgba(255,255,255,0.3);
             transition: 0.3s;
+            overflow-x: auto;
+            white-space: nowrap;
+            box-sizing: border-box;
         }
 
         body.dark-theme nav {
@@ -143,7 +146,8 @@
         }
 
         nav a {
-            flex: 1;
+            flex: 0 0 auto;
+            min-width: 75px;
             text-decoration: none;
             color: var(--azul-primario);
             font-size: 0.75rem;
@@ -387,7 +391,7 @@
 
         #theme-toggle {
             position: fixed;
-            bottom: 20px;
+            bottom: 90px;
             right: 20px;
             width: 50px;
             height: 50px;
@@ -719,9 +723,10 @@
 
     <nav>
         <a href="#agenda" onclick="verTodos()"><span class="icon">📅</span>Agenda</a>
-        <a href="#speakers"><span class="icon">👨‍⚕️</span>Ponentes</a>
+        <a href="#speakers" onclick="verTodos()"><span class="icon">👨‍⚕️</span>Ponentes</a>
+        <a href="#avales" onclick="verTodos()"><span class="icon">📜</span>Avales</a>
         <a href="javascript:void(0)" onclick="mostrarFavoritos()"><span class="icon" id="nav-fav">⭐</span>Mis Favs</a>
-        <a href="#venue"><span class="icon">🏨</span>Sede</a>
+        <a href="#venue" onclick="verTodos()"><span class="icon">🏨</span>Sede</a>
         <a href="javascript:void(0)" id="btnInstall" style="display:none;"><span class="icon">📲</span>Instalar</a>
     </nav>
 
@@ -1407,12 +1412,8 @@
             
             let tieneFavs = false;
             document.querySelectorAll('.agenda-item').forEach(item => {
-                if (item.classList.contains('comida')) {
-                    item.classList.add('hidden');
-                    return;
-                }
                 const charlaEl = item.querySelector('.charla');
-                if (charlaEl && misFavoritos.includes(charlaEl.innerText)) {
+                if (charlaEl && misFavoritos.includes(charlaEl.innerText.trim())) {
                     item.classList.remove('hidden');
                     tieneFavs = true;
                 } else {
@@ -1433,7 +1434,13 @@
             document.body.classList.remove('searching');
             document.querySelectorAll('.hidden').forEach(el => el.classList.remove('hidden'));
             document.querySelectorAll('.day-title, .modulo-header, .speaker-card').forEach(el => el.style.display = '');
-            const activa = document.querySelector('.tab-btn.active') || document.querySelector('.tab-btn');
+            
+            // Volver al tab activo o al primero
+            let activa = document.querySelector('.tab-btn.active');
+            if(!activa) {
+                const tabs = document.querySelectorAll('.tab-btn');
+                if(tabs.length > 0) activa = tabs[0];
+            }
             if(activa) activa.click();
         }
 
@@ -1458,7 +1465,7 @@
                 item.appendChild(actionsDiv);
 
                 const charlaEl = item.querySelector('.charla');
-                const titulo = charlaEl ? charlaEl.innerText : 'Charla';
+                const titulo = charlaEl ? charlaEl.innerText.trim() : 'Charla';
 
                 const favBtn = actionsDiv.querySelector('.fav');
                 if (misFavoritos.includes(titulo)) {
