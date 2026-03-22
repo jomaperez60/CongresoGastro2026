@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CongresoGastro 2026 - App Oficial</title>
+    <link rel="manifest" href="manifest.json">
+    <style>
+        :root {
+            --azul-primario: #0056b3;
+            --verde-exito: #28a745;
+            --gris-claro: #f4f7f6;
+            --texto-oscuro: #333;
+            --fondo-tarjeta: #ffffff;
+        }
+
+        body.dark-theme {
+            --azul-primario: #4da3ff;
+            --gris-claro: #121212;
+            --texto-oscuro: #e0e0e0;
+            --fondo-tarjeta: #1e1e1e;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            margin: 0;
+            background-color: var(--gris-claro);
+            color: var(--texto-oscuro);
+            transition: 0.3s;
+        }
+
+        header {
+            background: var(--azul-primario);
+            color: white;
+            padding: 2.5rem 1rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        header h2 {
+            font-size: 1rem;
+            font-weight: normal;
+            margin: 10px 0;
+            font-style: italic;
+            opacity: 0.9;
+        }
+
+        .reconocimiento {
+            font-size: 0.85rem;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 6px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background: var(--fondo-tarjeta);
+            padding: 0.8rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+        }
+
+        nav a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: var(--azul-primario);
+            font-weight: bold;
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }
+
+        .search-box {
+            padding: 15px;
+            text-align: center;
+        }
+
+        #appSearch {
+            width: 90%;
+            max-width: 600px;
+            padding: 12px 20px;
+            border-radius: 25px;
+            border: 2px solid var(--azul-primario);
+            outline: none;
+            background: var(--fondo-tarjeta);
+            color: var(--texto-oscuro);
+        }
+
+        .tabs {
+            display: flex;
+            background: #e0e0e0;
+            margin-top: 10px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            color: #555;
+            background: none;
+        }
+
+        .tab-btn.active {
+            background: var(--azul-primario);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 10px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 10px auto;
+            padding: 20px;
+            background: var(--fondo-tarjeta);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .modulo-header {
+            background: #e9ecef;
+            color: var(--azul-primario);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 25px 0 10px;
+            font-weight: bold;
+            border-left: 5px solid var(--azul-primario);
+        }
+
+        .agenda-item {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 5px;
+        }
+
+        .hora {
+            font-weight: bold;
+            color: var(--azul-primario);
+            font-size: 0.95rem;
+            min-width: 100px;
+            display: inline-block;
+        }
+
+        .charla {
+            display: block;
+            margin-top: 5px;
+            font-weight: 600;
+        }
+
+        .ponente {
+            display: block;
+            font-style: italic;
+            color: #666;
+            font-size: 0.85rem;
+            margin-top: 2px;
+        }
+
+        .comida {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 5px solid #ffc107;
+            font-weight: bold;
+        }
+
+        .speaker-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .speaker-card {
+            background: var(--fondo-tarjeta);
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .speaker-photo,
+        .avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 2px solid var(--azul-primario);
+            margin: 0 auto 8px;
+            object-fit: cover;
+        }
+
+        .avatar {
+            background: linear-gradient(135deg, var(--azul-primario), #4da3ff);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .speaker-card h4 {
+            margin: 5px 0;
+            font-size: 0.9rem;
+            color: var(--azul-primario);
+        }
+
+        .aval-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .aval-card {
+            background: var(--fondo-tarjeta);
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px 10px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .aval-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            object-fit: cover;
+        }
+
+        .aval-card h4 {
+            margin: 5px 0;
+            font-size: 0.9rem;
+            color: var(--azul-primario);
+            line-height: 1.2;
+        }
+
+        .aval-card p {
+            margin: 5px 0 0;
+            font-size: 0.75rem;
+            color: #666;
+            line-height: 1.2;
+        }
+
+        #theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            background: var(--azul-primario);
+            color: white;
+            cursor: pointer;
+            z-index: 2000;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            font-size: 0.8rem;
+        }
+
+        .day-title {
+            display: none;
+            color: var(--azul-primario);
+            margin: 0 0 15px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--azul-primario);
+            font-size: 1.1rem;
+            text-transform: uppercase;
+        }
+
+        body.searching .day-title {
+            display: block;
+        }
+
+        body.searching .tabs {
+            display: none;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Modal Feedback */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 3000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: var(--fondo-tarjeta);
+            margin: 10% auto;
+            padding: 25px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+            position: relative;
+            color: var(--texto-oscuro);
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-30px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close-btn {
+            color: #aaa;
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .close-btn:hover {
+            color: var(--azul-primario);
+        }
+
+        .modal-content h3 {
+            margin: 0 0 5px 0;
+            color: var(--azul-primario);
+            font-size: 1.2rem;
+            line-height: 1.3;
+            padding-right: 25px;
+        }
+
+        .modal-ponente {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            color: var(--azul-primario);
+        }
+
+        .form-group textarea {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-family: inherit;
+            background: var(--gris-claro);
+            color: var(--texto-oscuro);
+            resize: vertical;
+        }
+
+        .rating-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            background: var(--gris-claro);
+            padding: 12px 15px;
+            border-radius: 8px;
+        }
+
+        .rating-title {
+            font-size: 0.95rem;
+            font-weight: bold;
+        }
+
+        .stars {
+            display: flex;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .star {
+            font-size: 1.8rem;
+            color: #dcdcdc;
+            transition: color 0.2s, transform 0.1s;
+            user-select: none;
+        }
+
+        .star.active {
+            color: #f39c12;
+        }
+
+        .star:active {
+            transform: scale(0.9);
+        }
+
+        .btn-submit {
+            background: var(--verde-exito);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 8px;
+            width: 100%;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.2s;
+        }
+
+        .btn-submit:hover {
+            background: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);
+        }
+
+        .btn-slido {
+            display: block;
+            background: #1951f0;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            padding: 14px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            transition: 0.2s;
+        }
+
+        .btn-slido:hover {
+            background: #0c36a8;
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Clickeable Agenda Items */
+        .agenda-item {
+            transition: background 0.2s;
+        }
+
+        .agenda-item:not(.comida):hover {
+            background: rgba(0, 86, 179, 0.05);
+        }
+
+        .clickable-charla {
+            cursor: pointer;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        .clickable-charla:hover {
+            color: #004494;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>XVIII Congreso Internacional de Gastroenterología y VIII de Gastropediatría 2026</h1>
+        <h2>“DESAFÍOS GLOBALES, PERSPECTIVAS LOCALES EN GASTROENTEROLOGÍA”</h2>
+        <div class="reconocimiento">En reconocimiento del Dr. Enrique Martínez Reina</div>
+    </header>
+
+    <div class="search-box">
+        <input type="text" id="appSearch" placeholder="Buscar charlas o ponentes...">
+    </div>
+
+    <nav>
+        <a href="#agenda">Agenda</a>
+        <a href="#speakers">Ponentes</a>
+        <a href="#avales">Avales</a>
+        <a href="#venue">Sede</a>
+        <a href="#register">Registro</a>
+    </nav>
+
+    <div class="container" id="agenda">
+        <div class="tabs">
+            <button class="tab-btn active" onclick="verDia(event, 'jueves')">Jueves 30 Jul</button>
+            <button class="tab-btn" onclick="verDia(event, 'viernes')">Viernes 31 Jul</button>
+            <button class="tab-btn" onclick="verDia(event, 'sabado')">Sábado 1 Ago</button>
+        </div>
+
+        <div id="jueves" class="tab-content active">
+            <h3 class="day-title">Jueves 30 de Julio</h3>
+            <div class="agenda-item"><span class="hora">07:00 - 07:45</span> <span class="charla">Registro e
+                    Inauguración</span></div>
+            <div class="agenda-item"><span class="hora">07:45 - 08:00</span> <span class="charla">Palabras de
+                    bienvenida: Dr. Jorge Suazo Barahona, presidente de la Asociación Hondureña de
+                    Gastroenterología</span></div>
+
+            <div class="modulo-header">MÓDULO 1: ESÓFAGO Y ESTÓMAGO</div>
+            <div class="agenda-item"><span class="hora">08:00 - 08:20</span> <span class="charla">¿Cómo debemos abordar
+                    la Dispepsia Funcional en 2026 en Latinoamérica?</span><span class="ponente">Dr. Ignacio Hanna
+                    Jairala (Ecuador)</span></div>
+            <div class="agenda-item"><span class="hora">08:20 - 08:40</span> <span class="charla">Disfagia esofágica:
+                    claves clínicas para el médico no especialista</span><span class="ponente">Dra. Laura Solé
+                    (Argentina)</span></div>
+            <div class="agenda-item"><span class="hora">08:40 - 09:00</span> <span class="charla">Manejo del ERGE en la
+                    era de los PCABs: ¿los IBP se quedan o se van?</span><span class="ponente">Dr. Ignacio Hanna Jairala
+                    (Ecuador)</span></div>
+            <div class="agenda-item"><span class="hora">09:00 - 09:20</span> <span class="charla">Reflujo
+                    laringofaríngeo: no todo es ácido, no todo es reflujo</span><span class="ponente">Dra. Laura Solé
+                    (Argentina)</span></div>
+            <div class="agenda-item"><span class="hora">09:20 - 09:40</span> <span class="charla">Panel de
+                    expertos</span><span class="ponente">Todos los ponentes del módulo</span></div>
+
+            <div class="agenda-item comida">09:40 - 10:00 ☕ COFFEE BREAK</div>
+
+            <div class="modulo-header">MÓDULO 2: INTESTINO DELGADO Y COLON</div>
+            <div class="agenda-item"><span class="hora">10:00 - 10:20</span> <span class="charla">Enfermedad celíaca:
+                    cuándo sospecharla y cómo confirmarla correctamente</span><span class="ponente">Dr. Luis Valdovinos
+                    García (México)</span></div>
+            <div class="agenda-item"><span class="hora">10:20 - 10:40</span> <span class="charla">Nuevas perspectivas
+                    terapéuticas en el síndrome de intestino irritable</span><span class="ponente">Dr. Ignacio Hanna
+                    Jairala (Ecuador)</span></div>
+            <div class="agenda-item"><span class="hora">10:40 - 11:00</span> <span class="charla">Diarrea crónica:
+                    enfoque diagnóstico paso a paso</span><span class="ponente">Dr. Luis Valdovinos García
+                    (México)</span></div>
+            <div class="agenda-item"><span class="hora">11:00 - 11:20</span> <span class="charla">Distensión abdominal:
+                    abordaje integral</span><span class="ponente">Dr. Ignacio Hanna Jairala (Ecuador)</span></div>
+            <div class="agenda-item"><span class="hora">11:20 - 11:40</span> <span class="charla">Panel de expertos -
+                    Módulo 2</span><span class="ponente">Todos los ponentes del módulo</span></div>
+            <div class="agenda-item"><span class="hora">11:40 - 12:00</span> <span class="charla">Transición a Simposio
+                    Comida</span></div>
+
+            <div class="modulo-header">🍽 SIMPOSIO COMIDA SLNG</div>
+            <div class="agenda-item comida"><span class="hora">12:00 - 13:30</span> <span class="charla">"Estreñimiento
+                    crónico: una sola entidad con diversas caras"</span><span class="ponente">Dra. Laura Solé
+                    (Argentina), Dr. Ignacio Hanna Jairala (Ecuador), Dr. Luis Valdovinos García (México)</span></div>
+
+            <div class="modulo-header">MÓDULO 3: PÁNCREAS</div>
+            <div class="agenda-item"><span class="hora">13:30 - 13:50</span> <span class="charla">Actualidades en la
+                    pancreatitis autoinmune</span><span class="ponente">Dr. Enrique de Madaria (España)</span></div>
+            <div class="agenda-item"><span class="hora">13:50 - 14:10</span> <span class="charla">USE en enfermedades
+                    pancreáticas</span><span class="ponente">Dr. Johny Cerna Cardona (México)</span></div>
+            <div class="agenda-item"><span class="hora">14:10 - 14:30</span> <span class="charla">Avances en el
+                    diagnóstico y tratamiento de la Pancreatitis Aguda</span><span class="ponente">Dr. Enrique de
+                    Madaria (España)</span></div>
+            <div class="agenda-item"><span class="hora">14:30 - 14:50</span> <span class="charla">Cómo diagnosticamos y
+                    manejamos la insuficiencia pancreática exocrina</span><span class="ponente">Dr. Enrique de Madaria
+                    (España)</span></div>
+            <div class="agenda-item"><span class="hora">14:50 - 15:10</span> <span class="charla">Panel de
+                    expertos</span><span class="ponente">Todos los ponentes del módulo</span></div>
+
+            <div class="agenda-item comida">15:10 - 15:30 ☕ COFFEE BREAK</div>
+
+            <div class="modulo-header">MÓDULO 4: COLON</div>
+            <div class="agenda-item"><span class="hora">15:30 - 15:50</span> <span class="charla">Recomendaciones sobre
+                    el diagnóstico, caracterización y manejo de los pólipos del colon: visión del coloproctólogo</span>
+            </div>
+            <div class="agenda-item"><span class="hora">15:50 - 16:10</span> <span class="charla">Diagnóstico y
+                    seguimiento de cáncer colorrectal</span></div>
+            <div class="agenda-item"><span class="hora">16:10 - 16:30</span> <span class="charla">Enfermedad
+                    diverticular</span><span class="ponente">Dr. José Bandera Quijano (México)</span></div>
+            <div class="agenda-item"><span class="hora">16:30 - 16:50</span> <span class="charla">Actualidades en el
+                    manejo de lesiones anorrectales benignas: claves de diagnóstico y manejo para el consultorio</span>
+            </div>
+            <div class="agenda-item"><span class="hora">16:50 - 17:10</span> <span class="charla">Panel de
+                    expertos</span><span class="ponente">Todos los ponentes del módulo</span></div>
+        </div>
+
+        <div id="viernes" class="tab-content">
+            <h3 class="day-title">Viernes 31 de Julio</h3>
+            <div class="modulo-header">MÓDULO 5: HÍGADO Y OBESIDAD</div>
+            <div class="agenda-item"><span class="hora">08:00 - 08:20</span> <span class="charla">MASLD como un problema
+                    creciente de salud pública mundial</span><span class="ponente">Dra. Graciela Castro Narro
+                    (México)</span></div>
+            <div class="agenda-item"><span class="hora">08:20 - 08:40</span> <span class="charla">Riesgo cardiovascular
+                    en MASLD y estrategias de control</span><span class="ponente">Dr. Francisco Barrera (Chile)</span>
+            </div>
+            <div class="agenda-item"><span class="hora">08:40 - 09:00</span> <span class="charla">Terapias específicas
+                    nuevas y emergentes en MASLD</span><span class="ponente">Dra. Graciela Castro Narro (México)</span>
+            </div>
+            <div class="agenda-item"><span class="hora">09:00 - 09:20</span> <span class="charla">Obesidad: lo que el
+                    gastroenterólogo debe saber</span><span class="ponente">Dr. Francisco Barrera (Chile)</span></div>
+            <div class="agenda-item"><span class="hora">09:20 - 09:40</span> <span class="charla">Panel de
+                    expertos</span><span class="ponente">Todos los ponentes del módulo</span></div>
+
+            <div class="agenda-item comida">09:40 - 10:00 ☕ COFFEE BREAK</div>
+
+            <div class="modulo-header">MÓDULO 6: ESTUDIOS DIAGNÓSTICOS EN NEUROGASTROENTEROLOGÍA</div>
+            <div class="agenda-item"><span class="hora">10:00 - 10:20</span> <span class="charla">Estudios diagnósticos
+                    para la disfagia orofaríngea</span><span class="ponente">Dr. Jorge Suazo Barahona (Honduras)</span>
+            </div>
+            <div class="agenda-item"><span class="hora">10:20 - 10:40</span> <span class="charla">pH-metría,
+                    pH-impedancia, Bravo: ¿Cuál, cómo y por qué?</span><span class="ponente">Dr. Luis Valdovinos García
+                    (México)</span></div>
+            <div class="agenda-item"><span class="hora">10:40 - 11:00</span> <span class="charla">Pruebas de aliento: lo
+                    que debemos saber</span><span class="ponente">Dr. Luis Valdovinos García (México)</span></div>
+            <div class="agenda-item"><span class="hora">11:00 - 11:20</span> <span class="charla">Manometría anorrectal:
+                    ¿cuándo, cómo y por qué?</span><span class="ponente">Dra. Laura Solé (Argentina)</span></div>
+            <div class="agenda-item"><span class="hora">11:20 - 11:40</span> <span class="charla">Rol del biofeedback en
+                    los trastornos anorrectales</span><span class="ponente">Dra. Laura Solé (Argentina)</span></div>
+            <div class="agenda-item"><span class="hora">11:40 - 12:00</span> <span class="charla">Panel de
+                    expertos</span><span class="ponente">Todos los ponentes del módulo</span></div>
+
+            <div class="modulo-header">🍽 SIMPOSIO COMIDA 2</div>
+            <div class="agenda-item comida"><span class="hora">12:00 - 13:30</span> <span
+                    class="charla">Probióticos</span><span class="ponente">Dr. Francisco Guarner</span></div>
+
+            <div class="modulo-header">MÓDULO 7: HELICOBACTER PYLORI Y CANCER GÁSTRICO</div>
+            <div class="agenda-item"><span class="hora">13:30 - 13:50</span> <span class="charla">Helicobacter pylori:
+                    Qué dicen las guías de manejo y qué es aplicable a nuestro medio</span></div>
+            <div class="agenda-item"><span class="hora">13:50 - 14:10</span> <span class="charla">Tratamiento de H.
+                    pylori: Errores frecuentes, opciones de rescate y cuándo detenerse</span></div>
+            <div class="agenda-item"><span class="hora">14:10 - 14:30</span> <span class="charla">Lesiones premalignas
+                    gástricas: ¿qué hacer y cada cuánto vigilar?</span><span class="ponente">Dr. Johny Cerna Cardona
+                    (México)</span></div>
+            <div class="agenda-item"><span class="hora">14:30 - 14:50</span> <span class="charla">Cáncer gástrico:
+                    detección oportuna y papel del médico no especialista</span></div>
+            <div class="agenda-item"><span class="hora">14:50 - 15:10</span> <span class="charla">Panel de
+                    Expertos</span><span class="ponente">Todos los ponentes del módulo</span></div>
+
+            <div class="agenda-item comida">15:10 - 15:30 ☕ COFFEE BREAK</div>
+
+            <div class="modulo-header">MÓDULO 8: LAS REDES SOCIALES Y LA INTELIGENCIA ARTIFICIAL</div>
+            <div class="agenda-item"><span class="hora">15:30 - 15:50</span> <span class="charla">Comunicación médica en
+                    redes sociales: estrategias, alcance y límites.</span><span class="ponente">Dr. Enrique de Madaria
+                    (España)</span></div>
+            <div class="agenda-item"><span class="hora">15:50 - 16:10</span> <span class="charla">IA práctica en la
+                    consulta y en endoscopia: herramientas válidas y cómo integrarlas.</span><span class="ponente">Dr.
+                    José Bandera Quijano (México)</span></div>
+            <div class="agenda-item"><span class="hora">16:10 - 16:30</span> <span class="charla">Cómo usar las redes
+                    sociales y otras herramientas para hacer proyectos de investigación.</span><span class="ponente">Dr.
+                    Enrique de Madaria (España)</span></div>
+            <div class="agenda-item"><span class="hora">16:30 - 16:50</span> <span class="charla">Riesgos, ética y
+                    regulación: desinformación, privacidad y responsabilidad clínica al usar IA y redes.</span><span
+                    class="ponente">Dr. José Bandera Quijano (México)</span></div>
+            <div class="agenda-item"><span class="hora">16:50 - 17:10</span> <span class="charla">Panel de
+                    expertos</span><span class="ponente">Todos los ponentes del módulo</span></div>
+        </div>
+
+        <div id="sabado" class="tab-content">
+            <h3 class="day-title">Sábado 1 de Agosto</h3>
+            <div class="modulo-header">MÓDULO 9: HEMORRAGIA DIGESTIVA</div>
+            <div class="agenda-item"><span class="hora">08:00 - 08:20</span> <span class="charla">Hemorragia digestiva
+                    alta en pacientes anticoagulados y adultos mayores: cómo actuar?</span><span class="ponente">Dr.
+                    Johny Cerna Cardona (México)</span></div>
+            <div class="agenda-item"><span class="hora">08:20 - 08:40</span> <span class="charla">Scores pronósticos en
+                    hemorragia digestiva alta: cuáles y cómo aplicarlos?</span></div>
+            <div class="agenda-item"><span class="hora">08:40 - 09:00</span> <span class="charla">Hemorragia de
+                    intestino medio ¿Cuándo solicitar exámenes y cuáles tenemos disponibles?</span></div>
+            <div class="agenda-item"><span class="hora">09:00 - 09:20</span> <span class="charla">Hay algo nuevo en el
+                    manejo de la hemorragia digestiva alta en 2026?</span><span class="ponente">Dr. Johny Cerna Cardona
+                    (México)</span></div>
+            <div class="agenda-item"><span class="hora">09:20 - 09:40</span> <span class="charla">Panel de
+                    expertos</span><span class="ponente">Todos los ponentes del módulo</span></div>
+
+            <div class="agenda-item comida">09:40 - 10:00 ☕ COFFEE BREAK</div>
+
+            <div class="modulo-header">MÓDULO 10: HEPATOLOGÍA</div>
+            <div class="agenda-item"><span class="hora">10:00 - 10:20</span> <span class="charla">Herramientas no
+                    invasivas para el diagnóstico de fibrosis hepática e hipertensión portal: tips de su uso en la
+                    práctica diaria</span><span class="ponente">Dra. Graciela Castro Narro (México)</span></div>
+            <div class="agenda-item"><span class="hora">10:20 - 10:40</span> <span class="charla">Nutrición y fragilidad
+                    en el paciente cirrótico: lo estamos tomando en cuenta en el consultorio?</span><span
+                    class="ponente">Dr. Francisco Barrera (Chile)</span></div>
+            <div class="agenda-item"><span class="hora">10:40 - 11:00</span> <span class="charla">El cirrótico con daño
+                    renal: cómo hacer el diagnóstico temprano y adoptar el manejo adecuado</span><span
+                    class="ponente">Dr. Francisco Barrera (Chile)</span></div>
+            <div class="agenda-item"><span class="hora">11:00 - 11:20</span> <span class="charla">Actualidades en el
+                    manejo de la ascitis</span></div>
+            <div class="agenda-item"><span class="hora">11:20 - 11:40</span> <span class="charla">Panel de
+                    expertos</span><span class="ponente">Todos los ponentes del módulo</span></div>
+
+            <div class="agenda-item"><span class="hora">11:40 - 12:00</span> <span class="charla">🎖️ SESIÓN DE
+                    CLAUSURA</span></div>
+        </div>
+    </div>
+
+    <div class="container" id="speakers">
+        <h2>Cuerpo Docente Internacional</h2>
+        <div class="speaker-grid">
+            <div class="speaker-card">
+                <img src="img/speakers/ignacio_hanna.jpg" class="speaker-photo" alt="Dr. Ignacio Hanna J."
+                    loading="lazy">
+                <h4>Dr. Ignacio Hanna J.</h4>
+                <p>Ecuador</p>
+            </div>
+            <div class="speaker-card">
+                <img src="img/speakers/laura_sole.jpg" class="speaker-photo" alt="Dra. Laura Solé" loading="lazy">
+                <h4>Dra. Laura Solé</h4>
+                <p>Argentina</p>
+            </div>
+            <div class="speaker-card">
+                <img src="img/speakers/luis_valdovinos.jpg" class="speaker-photo" alt="Dr. Luis Valdovinos"
+                    loading="lazy">
+                <h4>Dr. Luis Valdovinos G.</h4>
+                <p>México</p>
+            </div>
+            <div class="speaker-card">
+                <img src="img/speakers/enrique_demadaria.jpg" class="speaker-photo" alt="Dr. Enrique de Madaria"
+                    loading="lazy">
+                <h4>Dr. Enrique de Madaria</h4>
+                <p>España</p>
+            </div>
+            <div class="speaker-card">
+                <img src="img/speakers/graciela_castro.png" class="speaker-photo" alt="Dra. Graciela Castro"
+                    loading="lazy">
+                <h4>Dra. Graciela Castro N.</h4>
+                <p>México</p>
+            </div>
+            <div class="speaker-card">
+                <img src="img/speakers/francisco_barrera.jpg" class="speaker-photo" alt="Dr. Francisco Barrera"
+                    loading="lazy">
+                <h4>Dr. Francisco Barrera</h4>
+                <p>Chile</p>
+            </div>
+            <div class="speaker-card">
+                <img src="img/speakers/johny_cerna.jpg" class="speaker-photo" alt="Dr. Johny Cerna" loading="lazy">
+                <h4>Dr. Johny Cerna C.</h4>
+                <p>México</p>
+            </div>
+            <div class="speaker-card">
+                <img src="img/speakers/jose_bandera.jpg" class="speaker-photo" alt="Dr. José Bandera Q." loading="lazy">
+                <h4>Dr. José Bandera Q.</h4>
+                <p>México</p>
+            </div>
+            <div class="speaker-card">
+                <img src="img/speakers/francisco_guarner.jpg" class="speaker-photo" alt="Dr. Francisco Guarner"
+                    loading="lazy">
+                <h4>Dr. Francisco Guarner</h4>
+                <p>España</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="avales">
+        <h2>Avales Académicos</h2>
+        <div class="aval-grid">
+            <div class="aval-card">
+                <img src="https://ui-avatars.com/api/?name=CMH&background=0056b3&color=fff&size=120&font-size=0.4"
+                    class="aval-logo" loading="lazy">
+                <h4>Colegio Médico de Honduras</h4>
+            </div>
+            <div class="aval-card">
+                <img src="https://ui-avatars.com/api/?name=CEN+EMEC&background=28a745&color=fff&size=120&font-size=0.3"
+                    class="aval-logo" loading="lazy">
+                <h4>CENEMEC</h4>
+                <p>Centro Nacional de Educación Médica Continua</p>
+            </div>
+            <div class="aval-card">
+                <img src="https://ui-avatars.com/api/?name=AHG&background=0056b3&color=fff&size=120&font-size=0.4"
+                    class="aval-logo" loading="lazy">
+                <h4>Asociación Hondureña de Gastroenterología</h4>
+            </div>
+            <div class="aval-card">
+                <img src="https://ui-avatars.com/api/?name=ALEH&background=17a2b8&color=fff&size=120&font-size=0.35"
+                    class="aval-logo" loading="lazy">
+                <h4>ALEH</h4>
+                <p>Asociación Latinoamericana para el Estudio del Hígado</p>
+            </div>
+            <div class="aval-card">
+                <img src="https://ui-avatars.com/api/?name=OP+GE&background=0056b3&color=fff&size=120&font-size=0.3"
+                    class="aval-logo" loading="lazy">
+                <h4>OPGE</h4>
+                <p>Organización Panamericana de Gastroenterología</p>
+            </div>
+            <div class="aval-card">
+                <img src="https://ui-avatars.com/api/?name=SLNG&background=dc3545&color=fff&size=120&font-size=0.35"
+                    class="aval-logo" loading="lazy">
+                <h4>SLNG</h4>
+                <p>Sociedad Latinoamericana de Neurogastroenterología</p>
+            </div>
+            <div class="aval-card">
+                <img src="https://ui-avatars.com/api/?name=LASP+GHAN&background=f39c12&color=fff&size=120&font-size=0.25"
+                    class="aval-logo" loading="lazy">
+                <h4>LASPGHAN</h4>
+                <p>Gastroenterología Pediátrica, Hepatología y Nutrición</p>
+            </div>
+            <div class="aval-card">
+                <img src="https://ui-avatars.com/api/?name=Roma+V&background=343a40&color=fff&size=120&length=2"
+                    class="aval-logo" loading="lazy">
+                <h4>Roma V LATAM</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="venue">
+        <h2>Sede Oficial</h2>
+        <p><strong>Hotel Copantl Sula</strong>, San Pedro Sula, Honduras.</p>
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3844.646506307399!2d-88.03350322416244!3d15.485125385116792!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f664366c8916365%3A0xe54d6f85d38a4d70!2sHotel%20Copantl!5e0!3m2!1ses!2shn!4v1709400000000!5m2!1ses!2shn"
+            width="100%" height="250" style="border:0; border-radius:10px;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+
+    <div class="container" id="register">
+        <h2>Registro e Inscripciones</h2>
+        <p>Asegura tu lugar en el evento médico del año. Completa tu proceso de inscripción en nuestro portal oficial.
+        </p>
+        <a href="#"
+            style="display:inline-block; margin-top:10px; padding:10px 20px; background:var(--azul-primario); color:white; text-decoration:none; border-radius:5px; font-weight:bold;">Inscribirme
+            Ahora</a>
+    </div>
+
+    <footer>
+        <p>© 2026 Asociación Hondureña de Gastroenterología</p>
+    </footer>
+
+    <button id="theme-toggle">🌓</button>
+
+    <!-- Modal HTML -->
+    <div id="talkModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="cerrarModal()">&times;</span>
+            <h3 id="modalTitle">Título de la Charla</h3>
+            <p id="modalSpeaker" class="modal-ponente">Ponente</p>
+
+            <div class="form-group" style="text-align: center;">
+                <p style="margin-bottom: 15px; font-size: 0.95rem; color: #555;">Pasa al panel interactivo para hacer
+                    preguntas en vivo al moderador y votar por las mejores preguntas del público.</p>
+                <a href="https://app.sli.do/" target="_blank" class="btn-slido">Hacer Pregunta en Vivo (Slido)</a>
+                <hr style="border: 0; border-top: 1px solid #ddd; margin: 25px 0;">
+            </div>
+
+            <div class="form-group">
+                <label>Califica esta Charla:</label>
+                <div class="rating-container">
+                    <span class="rating-title">El Tema</span>
+                    <div class="stars" data-category="tema">
+                        <span class="star" data-val="1">★</span><span class="star" data-val="2">★</span><span
+                            class="star" data-val="3">★</span><span class="star" data-val="4">★</span><span class="star"
+                            data-val="5">★</span>
+                    </div>
+                </div>
+                <div class="rating-container">
+                    <span class="rating-title">El Expositor</span>
+                    <div class="stars" data-category="expositor">
+                        <span class="star" data-val="1">★</span><span class="star" data-val="2">★</span><span
+                            class="star" data-val="3">★</span><span class="star" data-val="4">★</span><span class="star"
+                            data-val="5">★</span>
+                    </div>
+                </div>
+                <div class="rating-container">
+                    <span class="rating-title">Relevancia Charla</span>
+                    <div class="stars" data-category="relevancia">
+                        <span class="star" data-val="1">★</span><span class="star" data-val="2">★</span><span
+                            class="star" data-val="3">★</span><span class="star" data-val="4">★</span><span class="star"
+                            data-val="5">★</span>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-submit" onclick="enviarFeedback()">Mandar Feedback</button>
+        </div>
+    </div>
+
+    <script>
+        function verDia(evt, dayId) {
+            var i, tabcontent, tablinks;
+
+            // Limpiar búsqueda
+            const searchInput = document.getElementById('appSearch');
+            if (searchInput.value !== '') {
+                searchInput.value = '';
+                document.body.classList.remove('searching');
+                document.querySelectorAll('.hidden').forEach(el => el.classList.remove('hidden'));
+            }
+
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) { tabcontent[i].style.display = "none"; }
+            tablinks = document.getElementsByClassName("tab-btn");
+            for (i = 0; i < tablinks.length; i++) { tablinks[i].className = tablinks[i].className.replace(" active", ""); }
+            document.getElementById(dayId).style.display = "block";
+
+            if (evt) {
+                evt.currentTarget.className += " active";
+            } else {
+                const btn = document.querySelector(`button[onclick*="${dayId}"]`);
+                if (btn) btn.className += " active";
+            }
+        }
+
+        document.getElementById('appSearch').addEventListener('input', (e) => {
+            const t = e.target.value.toLowerCase();
+
+            if (t.length > 0) {
+                document.body.classList.add('searching');
+                document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'block');
+
+                // Filtrar elementos
+                document.querySelectorAll('.agenda-item, .speaker-card, .modulo-header').forEach(el => {
+                    el.innerText.toLowerCase().includes(t) ? el.classList.remove('hidden') : el.classList.add('hidden');
+                });
+
+                // Mostrar tíulos de día solo si hay coincidencias en ese día
+                document.querySelectorAll('.tab-content').forEach(tab => {
+                    const title = tab.querySelector('.day-title');
+                    const hasVisibleItems = Array.from(tab.querySelectorAll('.agenda-item, .modulo-header')).some(el => !el.classList.contains('hidden'));
+                    if (title) {
+                        hasVisibleItems ? title.style.display = 'block' : title.style.display = 'none';
+                    }
+                });
+
+            } else {
+                document.body.classList.remove('searching');
+                document.querySelectorAll('.hidden').forEach(el => el.classList.remove('hidden'));
+
+                // Limpiar display inline en los day-title
+                document.querySelectorAll('.day-title').forEach(el => el.style.display = '');
+
+                const activa = document.querySelector('.tab-btn.active');
+                if (activa) activa.click();
+            }
+        });
+
+        // Dark mode con localStorage
+        const themeToggle = document.getElementById('theme-toggle');
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-theme');
+        }
+
+        themeToggle.onclick = () => {
+            document.body.classList.toggle('dark-theme');
+            if (document.body.classList.contains('dark-theme')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        };
+
+        // Registrar Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('SW Registrado', reg.scope))
+                    .catch(err => console.error('SW Error', err));
+            });
+        }
+
+        // Generar Avatares dinámicos basados en sus nombres
+        document.querySelectorAll('.avatar').forEach(el => {
+            const name = el.getAttribute('data-name');
+            const initials = name.split(' ')
+                .filter(n => n.length > 2 && !['del', 'de'].includes(n.toLowerCase()))
+                .slice(0, 2)
+                .map(n => n[0])
+                .join('')
+                .toUpperCase();
+            el.innerText = initials;
+        });
+
+        // Lógica del Modal Interactiva
+        const modal = document.getElementById('talkModal');
+        let currentRatings = { tema: 0, expositor: 0, relevancia: 0 };
+
+        function abrirModal(title, speaker) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalSpeaker').innerText = speaker ? speaker : 'Panel / Sin ponente específico';
+
+            currentRatings = { tema: 0, expositor: 0, relevancia: 0 };
+            document.querySelectorAll('.star').forEach(s => s.classList.remove('active'));
+
+            modal.style.display = 'block';
+        }
+
+        function cerrarModal() {
+            modal.style.display = 'none';
+        }
+
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                cerrarModal();
+            }
+        }
+
+        document.querySelectorAll('.star').forEach(star => {
+            star.addEventListener('click', function () {
+                const val = parseInt(this.getAttribute('data-val'));
+                const category = this.parentElement.getAttribute('data-category');
+                currentRatings[category] = val;
+
+                const siblings = this.parentElement.querySelectorAll('.star');
+                siblings.forEach(s => {
+                    parseInt(s.getAttribute('data-val')) <= val ? s.classList.add('active') : s.classList.remove('active');
+                });
+            });
+        });
+
+        // 🔴 Escribe tu correo electrónico aquí para recibir las calificaciones de las estrellas:
+        const FORMSUBMIT_EMAIL = "asociaciongastrohonduras@gmail.com";
+
+        function enviarFeedback() {
+            const charla = document.getElementById('modalTitle').innerText;
+            const ponente = document.getElementById('modalSpeaker').innerText;
+
+            if (currentRatings.tema === 0 && currentRatings.expositor === 0 && currentRatings.relevancia === 0) {
+                alert("Por favor selecciona al menos una estrella para evaluar la sesión.");
+                return;
+            }
+
+            const btn = document.querySelector('.btn-submit');
+            const originalText = btn.innerText;
+            btn.innerText = "Enviando Evaluación...";
+            btn.disabled = true;
+
+            const payload = {
+                Charla: charla,
+                Ponente: ponente,
+                Evaluacion_Tema: currentRatings.tema + " Estrellas",
+                Evaluacion_Expositor: currentRatings.expositor + " Estrellas",
+                Evaluacion_Relevancia: currentRatings.relevancia + " Estrellas"
+            };
+
+            if (FORMSUBMIT_EMAIL === "tu_correo@gmail.com") {
+                alert("¡Simulación Exitosa!\nHas asignado las estrellas correctamente. (Pega tu correo real en el código para activar el envío de verdad al finalizar el proyecto).");
+                cerrarModal();
+                btn.innerText = originalText;
+                btn.disabled = false;
+                return;
+            }
+
+            // Usamos un formulario tradicional oculto para evitar bloqueos anti-spam la primera vez
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = 'https://formsubmit.co/' + FORMSUBMIT_EMAIL;
+            
+            const next = document.createElement('input');
+            next.type = 'hidden';
+            next.name = '_next';
+            next.value = window.location.href; // Retorna automáticamente a tu App
+            form.appendChild(next);
+
+            const captcha = document.createElement('input');
+            captcha.type = 'hidden';
+            captcha.name = '_captcha';
+            captcha.value = 'false'; // Desactiva Captchas visuales si la plataforma lo permite
+            form.appendChild(captcha);
+
+            for (const key in payload) {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = key;
+                input.value = payload[key];
+                form.appendChild(input);
+            }
+
+            document.body.appendChild(form);
+            form.submit(); // Se enviará de forma nativa cambiando la pantalla muy brevemente
+        }
+
+        // Hacer las charlas clickeables para abrir el modal
+        document.querySelectorAll('.agenda-item').forEach(item => {
+            const charlaEl = item.querySelector('.charla');
+            if (charlaEl && !item.classList.contains('comida')) {
+                charlaEl.classList.add('clickable-charla');
+                charlaEl.addEventListener('click', () => {
+                    const titulo = charlaEl.innerText;
+                    const ponenteEl = item.querySelector('.ponente');
+                    const ponente = ponenteEl ? ponenteEl.innerText : '';
+                    abrirModal(titulo, ponente);
+                });
+            }
+        });
+    </script>
+
+</body>
+
+</html>
