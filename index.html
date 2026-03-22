@@ -1230,8 +1230,9 @@
             });
         });
 
-        // 🔴 Escribe tu correo electrónico aquí para recibir las calificaciones de las estrellas:
-        const FORMSUBMIT_EMAIL = "asociaciongastrohonduras@gmail.com";
+        // 🔴 Pega aquí la URL de tu Google Apps Script (termina en /exec)
+        // Ejemplo: "https://script.google.com/macros/s/AKfycb.../exec"
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx0BOrmkoj2FH8sfmLSsXXehCtyhNaFJ1Hm-u11yC17jE_3n1Tw7Y3GbIW4Rsjh5GD3/exec";
 
         function enviarFeedback() {
             const charla = document.getElementById('modalTitle').innerText;
@@ -1255,41 +1256,33 @@
                 Evaluacion_Relevancia: currentRatings.relevancia + " Estrellas"
             };
 
-            if (FORMSUBMIT_EMAIL === "tu_correo@gmail.com") {
-                alert("¡Simulación Exitosa!\nHas asignado las estrellas correctamente. (Pega tu correo real en el código para activar el envío de verdad al finalizar el proyecto).");
+            if (GOOGLE_SCRIPT_URL === "URL_DE_TU_SCRIPT_AQUI" || GOOGLE_SCRIPT_URL === "") {
+                alert("¡Simulación Exitosa!\nHas asignado las estrellas correctamente.\n\n(Recuerda pegar la URL de tu Google Apps Script en el código de index.html para enviar los datos reales a Google Sheets).");
                 cerrarModal();
                 btn.innerText = originalText;
                 btn.disabled = false;
                 return;
             }
 
-            // Usamos un formulario tradicional oculto para evitar bloqueos anti-spam la primera vez
-            const form = document.createElement('form');
-            form.method = 'POST';
-            form.action = 'https://formsubmit.co/' + FORMSUBMIT_EMAIL;
-
-            const next = document.createElement('input');
-            next.type = 'hidden';
-            next.name = '_next';
-            next.value = window.location.href; // Retorna automáticamente a tu App
-            form.appendChild(next);
-
-            const captcha = document.createElement('input');
-            captcha.type = 'hidden';
-            captcha.name = '_captcha';
-            captcha.value = 'false'; // Desactiva Captchas visuales si la plataforma lo permite
-            form.appendChild(captcha);
-
-            for (const key in payload) {
-                const input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = key;
-                input.value = payload[key];
-                form.appendChild(input);
-            }
-
-            document.body.appendChild(form);
-            form.submit(); // Se enviará de forma nativa cambiando la pantalla muy brevemente
+            // Enviar datos silenciosamente a Google Sheets
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'text/plain'
+                },
+                body: JSON.stringify(payload)
+            }).then(() => {
+                alert("¡Evaluación enviada con éxito! Gracias por tu feedback.");
+                cerrarModal();
+                btn.innerText = originalText;
+                btn.disabled = false;
+            }).catch(error => {
+                console.error('Error al enviar:', error);
+                alert("Hubo un error al enviar la evaluación. Inténtalo más tarde.");
+                btn.innerText = originalText;
+                btn.disabled = false;
+            });
         }
 
         // Agregar botones de acción a las charlas
