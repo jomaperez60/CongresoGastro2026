@@ -187,10 +187,10 @@
             color: white;
             border: none;
             border-radius: 5px;
-            padding: 8px 12px;
+            padding: 5px 10px;
             cursor: pointer;
             text-decoration: none;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1096,7 +1096,14 @@
 
         // Agregar botones de acción a las charlas
         document.querySelectorAll('.agenda-item').forEach(item => {
-            if (!item.classList.contains('comida')) {
+            const t = item.innerText.toLowerCase();
+            const omitirBotones = item.classList.contains('comida') || 
+                                  t.includes('registro') || 
+                                  t.includes('inauguraci') || 
+                                  t.includes('clausura') || 
+                                  t.includes('bienvenida');
+            
+            if (!omitirBotones) {
                 const actionsDiv = document.createElement('div');
                 actionsDiv.className = 'agenda-actions';
                 actionsDiv.innerHTML = `
