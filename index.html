@@ -1343,6 +1343,10 @@
         }
 
         // Lógica del Speaker Modal
+        const speakerBios = {
+            'Graciela Castro': `• Medica Internista, Gastroenteróloga, Endoscopista, Hepatóloga y Trasplante Hepático<br>• Jefa de Hepatología y Trasplante Hospital Médica Sur<br>• Médica adscrita al Departamento de Gastroenterología Instituto Nacional de Ciencias Médicas y Nutrición "Salvador Zubirán"<br>• Past President de la Asociación Latinoamericana para el Estudio del Hígado<br>• Ex Presidenta Asociación Mexicana de Hepatología<br>• Académica de la Academia Nacional de Cirugía de México<br>• Académica de la Academia Nacional de Medicina de México<br>• Sistema Nacional de Investigadores Nivel I, México<br>• Profesora Titular de Gastroenterología de la Universidad Nacional Autónoma de México<br>• Profesora de Gastroenterología de Universidad Panamericana`
+        };
+
         function abrirModalSpeaker(cardElement, keyword) {
             const nombre = cardElement.querySelector('h4').innerText;
             const pais = cardElement.querySelector('p').innerText;
@@ -1359,7 +1363,11 @@
                 imgEl.style.display = 'none';
             }
 
-            document.getElementById('speakerModalBio').innerText = "Próximamente estaremos publicando la biografía resumida de nuestro invitado internacional.";
+            if (speakerBios[keyword]) {
+                document.getElementById('speakerModalBio').innerHTML = speakerBios[keyword];
+            } else {
+                document.getElementById('speakerModalBio').innerText = "Próximamente estaremos publicando la biografía resumida de nuestro invitado internacional.";
+            }
 
             // Buscar charlas en la agenda
             const talksList = document.getElementById('speakerModalTalks');
