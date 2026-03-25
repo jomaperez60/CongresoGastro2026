@@ -800,11 +800,9 @@
                         Simposio
                         Comida</span></div>
 
-                <div class="modulo-header">🍽 SIMPOSIO COMIDA SLNG</div>
+                <div class="modulo-header">🍽 SIMPOSIO COMIDA</div>
                 <div class="agenda-item comida"><span class="hora">12:00 - 13:30</span> <span
-                        class="charla">"Estreñimiento
-                        crónico: una sola entidad con diversas caras"</span><span class="ponente">Dra. Laura Solé
-                        (Argentina), Dr. Ignacio Hanna Jairala (Ecuador), Dr. Luis Valdovinos García (México)</span>
+                        class="charla">Rol de prebióticos y probióticos en la recuperación de la microbiota intestinal</span><span class="ponente">(Dr. Francisco Guarner, España)</span>
                 </div>
 
                 <div class="modulo-header">MÓDULO 3: PÁNCREAS</div>
@@ -892,9 +890,11 @@
                 <div class="agenda-item"><span class="hora">11:40 - 12:00</span> <span class="charla">Panel de
                         expertos</span><span class="ponente">Todos los ponentes del módulo</span></div>
 
-                <div class="modulo-header">🍽 SIMPOSIO COMIDA 2</div>
+                <div class="modulo-header">🍽 SIMPOSIO COMIDA SLNG</div>
                 <div class="agenda-item comida"><span class="hora">12:00 - 13:30</span> <span
-                        class="charla">Probióticos</span><span class="ponente">Dr. Francisco Guarner</span></div>
+                        class="charla">"Estreñimiento
+                        crónico: una sola entidad con diversas caras"</span><span class="ponente">Dra. Laura Solé
+                        (Argentina), Dr. Ignacio Hanna Jairala (Ecuador), Dr. Luis Valdovinos García (México)</span></div>
 
                 <div class="modulo-header">MÓDULO 7: HELICOBACTER PYLORI Y CANCER GÁSTRICO</div>
                 <div class="agenda-item"><span class="hora">13:30 - 13:50</span> <span class="charla">Helicobacter
@@ -981,9 +981,55 @@
 
         <button class="accordion" onclick="toggleAccordion('programa-pediatria')">Programa Pediatría</button>
         <div id="programa-pediatria" class="panel">
-            <div class="agenda-item" style="text-align: center; padding: 40px 20px;">
-                <h3 style="color: var(--azul-primario); margin-bottom: 15px;">🚧 En trabajo</h3>
-                <p>El programa científico de pediatría estará disponible próximamente.</p>
+            <div class="tabs">
+                <button class="tab-btn active" onclick="verDia(event, 'p-jueves')">Jueves 30 Jul</button>
+                <button class="tab-btn" onclick="verDia(event, 'p-viernes')">Viernes 31 Jul</button>
+                <button class="tab-btn" onclick="verDia(event, 'p-sabado')">Sábado 1 Ago</button>
+            </div>
+
+            <div id="p-jueves" class="tab-content active">
+                <h3 class="day-title">Jueves 30 de Julio - Pediatría</h3>
+                <div class="agenda-item"><span class="hora">07:00 - 07:45</span> <span class="charla">Registro</span></div>
+                <div class="agenda-item"><span class="hora">07:45 - 08:00</span> <span class="charla">Inauguración</span></div>
+
+                <div class="modulo-header">BLOQUE 1: Nutrición y Desafíos Hepáticos Tempranos</div>
+                <div class="agenda-item"><span class="hora">08:05 - 08:30</span> <span class="charla">Dietas de moda y restricciones innecesarias: ¿Estamos nutriendo o limitando a nuestros pacientes?</span><span class="ponente">Lic. Luis Guifarro (Honduras)</span></div>
+                <div class="agenda-item"><span class="hora">08:30 - 08:55</span> <span class="charla">El ABC de las transaminasas: ¿Cuándo observar y cuándo derivar al especialista?</span><span class="ponente">Dra. Alejandra Sabillon (Honduras)</span></div>
+                <div class="agenda-item"><span class="hora">08:55 - 09:20</span> <span class="charla">Colestasis neonatal y del lactante: Claves para un abordaje inicial que salva vidas</span><span class="ponente">Dra. Mariana Espriu (México)</span></div>
+                <div class="agenda-item"><span class="hora">09:20 - 09:40</span> <span class="charla">Panel de Expertos</span><span class="ponente">Todos los ponentes del bloque</span></div>
+
+                <div class="agenda-item comida">09:40 - 10:00 ☕ COFFEE BREAK</div>
+
+                <div class="modulo-header">BLOQUE 2: La Pandemia Silenciosa: Inflamación Metabólica y MASLD</div>
+                <div class="agenda-item"><span class="hora">10:00 - 10:25</span> <span class="charla">Guía práctica para el manejo de la obesidad: Más allá del cálculo del IMC</span><span class="ponente">Dra. Julia Alberto (Honduras)</span></div>
+                <div class="agenda-item"><span class="hora">10:25 - 10:50</span> <span class="charla">Realidad local del daño hepático: Resultados del estudio de Fibroscan en niños con sobrepeso y obesidad</span><span class="ponente">Dr. Luis Enrique Jovel (Honduras)</span></div>
+                <div class="agenda-item"><span class="hora">10:50 - 11:15</span> <span class="charla">MASLD y Microbiota: Entendiendo el eje intestino-hígado como motor de la inflamación metabólica</span><span class="ponente">Dr. Julián Fernandez (Argentina)</span></div>
+                <div class="agenda-item"><span class="hora">11:15 - 11:40</span> <span class="charla">El músculo como órgano endocrino: Actividad física como piedra angular en el tratamiento del hígado graso</span><span class="ponente">Dra. Celenia Godoy (Honduras)</span></div>
+                <div class="agenda-item"><span class="hora">11:40 - 12:00</span> <span class="charla">Panel de Expertos</span><span class="ponente">Todos los ponentes del bloque</span></div>
+
+                <div class="modulo-header">🍽 SIMPOSIO COMIDA</div>
+                <div class="agenda-item comida"><span class="hora">12:00 - 13:30</span> <span class="charla">Rol de prebióticos y probióticos en la recuperación de la microbiota intestinal</span><span class="ponente">Dr. Francisco Guarner (España)</span></div>
+
+                <div class="modulo-header">BLOQUE 3: Dilemas en la Consulta: Entre la Evidencia y la Innovación</div>
+                <div class="agenda-item"><span class="hora">13:30 - 13:55</span> <span class="charla">¿Es realmente reflujo? Desmitificando la asociación entre síntomas respiratorios y ERGE</span><span class="ponente">Dr. Carlos Velasco (Colombia)</span></div>
+                <div class="agenda-item"><span class="hora">13:55 - 14:20</span> <span class="charla">Sospecha de APLV en atención primaria: Uso estratégico del Score CoMiSS y cuándo actuar</span><span class="ponente">Dr. Carlos Velasco (Colombia)</span></div>
+                <div class="agenda-item"><span class="hora">14:20 - 14:45</span> <span class="charla">"Microbiota intestinal: entre la ciencia, el mito y la práctica clínica basada en evidencia"</span><span class="ponente">Dr. Francisco Guarner (España)</span></div>
+                <div class="agenda-item"><span class="hora">14:45 - 15:10</span> <span class="charla">El pediatra 4.0: Integrando la Inteligencia Artificial en la práctica clínica diaria</span><span class="ponente">Dr. Carlos Timossi (México)</span></div>
+                <div class="agenda-item"><span class="hora">15:10 - 15:30</span> <span class="charla">Panel de Expertos</span><span class="ponente">Todos los ponentes del bloque</span></div>
+            </div>
+
+            <div id="p-viernes" class="tab-content">
+                <div class="agenda-item" style="text-align: center; padding: 40px 20px;">
+                    <h3 style="color: var(--azul-primario); margin-bottom: 15px;">🚧 En trabajo</h3>
+                    <p>El programa científico de pediatría para el viernes estará disponible próximamente.</p>
+                </div>
+            </div>
+
+            <div id="p-sabado" class="tab-content">
+                <div class="agenda-item" style="text-align: center; padding: 40px 20px;">
+                    <h3 style="color: var(--azul-primario); margin-bottom: 15px;">🚧 En trabajo</h3>
+                    <p>El programa científico de pediatría para el sábado estará disponible próximamente.</p>
+                </div>
             </div>
         </div>
 
