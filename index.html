@@ -1465,11 +1465,15 @@
 
         window.onclick = function (event) {
             const speakerModal = document.getElementById('speakerModal');
+            const questionModal = document.getElementById('questionModal');
             if (event.target == modal) {
                 cerrarModal();
             }
             if (event.target == speakerModal) {
                 cerrarSpeakerModal();
+            }
+            if (event.target == questionModal) {
+                cerrarQuestionModal();
             }
         }
 
@@ -1488,7 +1492,7 @@
 
         // 🔴 Pega aquí la URL de tu Google Apps Script (termina en /exec)
         // Ejemplo: "https://script.google.com/macros/s/AKfycb.../exec"
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz_1mXowNsJTgXXfTvEs3xXnXujHZpBt8Esxd-xxpenbC-kybpJoRwZpFy2rNPjVxY0/exec";
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxe9Uj661yk4CdagigjRwsBtmQe-tfu7Y-DQP48h7gEBINxmomyAivQGQALSoAJ7CPT/exec";
 
         function enviarFeedback() {
             const charla = document.getElementById('modalTitle').innerText;
@@ -1575,6 +1579,10 @@
 
         // Agregar botones de acción a las charlas
         document.querySelectorAll('.agenda-item').forEach(item => {
+            // Limpiar acciones previas si existen (por si el script corre dos veces)
+            const oldActions = item.querySelector('.agenda-actions');
+            if (oldActions) oldActions.remove();
+
             const t = item.innerText.toLowerCase();
             const omitirBotones = item.classList.contains('comida') ||
                 t.includes('registro') ||
@@ -1584,26 +1592,122 @@
                 t.includes('transici');
 
             if (!omitirBotones) {
+                const isPediatria = !!item.closest('#programa-pediatria');
+                const charlaEl = item.querySelector('.charla');
+                const titulo = charlaEl ? charlaEl.innerText.trim() : 'Charla';
+                const ponenteEl = item.querySelector('.ponente');
+                const ponente = ponenteEl ? ponenteEl.innerText : 'Ponente';
+                
+                let baseLink = isPediatria 
+                    ? "https://app.sli.do/event/hwiK2pFhHCVDs8penRiuYz" 
+                    : "https://app.sli.do/event/6rpxnK96rLoqEW9HHD326w";
+
                 const actionsDiv = document.createElement('div');
                 actionsDiv.className = 'agenda-actions';
                 actionsDiv.innerHTML = `
-                    <a href="https://app.sli.do/event/6rpxnK96rLoqEW9HHD326w" target="_blank" class="action-icon slido" title="Hacer pregunta en vivo">🗯️ Preguntas</a>
-                    <button class="action-icon eval" title="Evaluar charla">⭐ Evaluar</button>
+                    <button class="action-icon slido" title="Hacer pregunta: ${titulo}">🗯️ Preguntas</button>
+                    <button class="action-icon eval" title="Evaluar charla: ${titulo}">⭐ Evaluar</button>
                 `;
                 item.appendChild(actionsDiv);
 
+                const slidoBtn = actionsDiv.querySelector('.slido');
+                slidoBtn.addEventListener('click', () => {
+                    const congreso = isPediatria ? "Pediatría" : "Adultos";
+                    abrirModalPregunta(titulo, ponente, congreso);
+                });
+
                 const evalBtn = actionsDiv.querySelector('.eval');
                 evalBtn.addEventListener('click', () => {
-                    const charlaEl = item.querySelector('.charla');
-                    const titulo = charlaEl ? charlaEl.innerText.trim() : 'Charla';
-                    const ponenteEl = item.querySelector('.ponente');
-                    const ponente = ponenteEl ? ponenteEl.innerText : '';
                     abrirModal(titulo, ponente);
                 });
             }
         });
+
+        // Funciones para el Asistente de Preguntas (Modo Automático)
+        let currentCongreso = '';
+        function abrirModalPregunta(titulo, ponente, congreso) {
+            document.getElementById('qModalTitle').innerText = titulo;
+            document.getElementById('qModalSpeaker').innerText = ponente;
+            document.getElementById('userQuestion').value = '';
+            currentCongreso = congreso;
+            document.getElementById('questionModal').style.display = 'block';
+        }
+
+        function cerrarQuestionModal() {
+            document.getElementById('questionModal').style.display = 'none';
+        }
+
+        function enviarPregunta() {
+            const titulo = document.getElementById('qModalTitle').innerText;
+            const ponente = document.getElementById('qModalSpeaker').innerText;
+            const pregunta = document.getElementById('userQuestion').value.trim();
+            
+            if (!pregunta) {
+                showToast("Por favor, escribe tu pregunta antes de enviar.");
+                return;
+            }
+
+            const btn = document.querySelector('#questionModal .btn-submit');
+            const originalText = btn.innerText;
+            btn.innerText = "Enviando Pregunta...";
+            btn.disabled = true;
+
+            const payload = {
+                Tipo: "PREGUNTA",
+                Congreso: currentCongreso,
+                Charla: titulo,
+                Ponente: ponente,
+                Pregunta: pregunta
+            };
+
+            // Enviar datos al mismo Google Apps Script
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'text/plain'
+                },
+                body: JSON.stringify(payload)
+            }).then(() => {
+                showToast("✅ ¡Pregunta enviada al moderador!");
+                setTimeout(() => {
+                    cerrarQuestionModal();
+                    btn.innerText = originalText;
+                    btn.disabled = false;
+                }, 1500);
+            }).catch(error => {
+                console.error('Error al enviar:', error);
+                showToast("Hubo un error al enviar la pregunta.");
+                btn.innerText = originalText;
+                btn.disabled = false;
+            });
+        }
     </script>
 
+    <!-- Modal Asistente de Preguntas -->
+    <div id="questionModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="cerrarQuestionModal()">&times;</span>
+            <h3 style="color: var(--verde-exito);">Asistente de Preguntas</h3>
+            <p id="qModalContext" style="font-size: 0.9rem; margin-bottom: 15px; padding: 10px; background: var(--gris-claro); border-radius: 8px; border-left: 4px solid var(--verde-exito);">
+                Pregunta para: <strong id="qModalSpeaker"></strong><br>
+                Charla: <em id="qModalTitle"></em>
+            </p>
+
+            <div class="form-group">
+                <label>Escribe tu pregunta aquí:</label>
+                <textarea id="userQuestion" rows="4" placeholder="¿Cuál es su opinión sobre...?"></textarea>
+            </div>
+
+            <p style="font-size: 0.8rem; color: #666; margin-bottom: 15px;">
+                💡 Tu pregunta se enviará automáticamente al moderador con el título de la charla incluido.
+            </p>
+
+            <button class="btn-submit" onclick="enviarPregunta()" style="background: var(--azul-primario);">
+                Enviar Pregunta al Moderador 🚀
+            </button>
+        </div>
+    </div>
 </body>
 
 </html>

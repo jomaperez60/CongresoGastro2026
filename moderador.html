@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Moderador - CongresoGastro 2026</title>
+    <style>
+        :root {
+            --azul-primario: #1c387b;
+            --verde-exito: #28a745;
+            --gris-claro: #f4f7f6;
+            --texto-oscuro: #333;
+            --fondo-tarjeta: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--gris-claro);
+            color: var(--texto-oscuro);
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #10204b, #1c387b);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+
+        header p {
+            margin: 10px 0 0;
+            opacity: 0.8;
+        }
+
+        .status-badge {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: var(--verde-exito);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .pulse {
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            animation: pulse-animation 1.5s infinite;
+        }
+
+        @keyframes pulse-animation {
+            0% { transform: scale(0.9); opacity: 0.7; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(0.9); opacity: 0.7; }
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1000px;
+            margin: 0 auto 20px;
+            gap: 15px;
+        }
+
+        #searchBox {
+            flex: 1;
+            padding: 12px 20px;
+            border-radius: 25px;
+            border: 1px solid #ddd;
+            outline: none;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .refresh-btn {
+            background: var(--azul-primario);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .refresh-btn:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+
+        /* Segmented Control */
+        .segmented-control {
+            display: flex;
+            background: #e0e0e0;
+            padding: 4px;
+            border-radius: 30px;
+            gap: 4px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .segment-btn {
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            background: transparent;
+            color: #666;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        .segment-btn.active.adultos {
+            background: var(--azul-primario);
+            color: white;
+            box-shadow: 0 4px 10px rgba(28, 56, 123, 0.3);
+        }
+
+        .segment-btn.active.pediatria {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: white;
+            box-shadow: 0 4px 10px rgba(79, 172, 254, 0.3);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .question-card {
+            background: var(--fondo-tarjeta);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border-left: 6px solid var(--azul-primario);
+            transition: transform 0.2s;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .talk-title {
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--texto-oscuro);
+            margin-bottom: 12px;
+            display: block;
+            line-height: 1.2;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .badge-adultos {
+            background: linear-gradient(135deg, #1c387b, #10204b);
+            color: white;
+        }
+
+        .badge-pediatria {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: white;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            color: #000;
+            font-weight: 500;
+        }
+
+        .meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: #666;
+            border-top: 1px solid #eee;
+            padding-top: 12px;
+        }
+
+        .speaker {
+            font-style: italic;
+        }
+
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px;
+            color: #888;
+        }
+
+        #loading {
+            text-align: center;
+            padding: 40px;
+            font-weight: bold;
+            color: var(--azul-primario);
+        }
+
+        @media (max-width: 600px) {
+            .controls { flex-direction: column; }
+            .container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Panel de Moderación en Vivo</h1>
+        <p>XVII Congreso Internacional de Gastroenterología</p>
+        <div class="status-badge"><div class="pulse"></div> EN VIVO</div>
+    </header>
+
+    <div class="controls">
+        <div class="segmented-control">
+            <button class="segment-btn adultos active" onclick="setCongress('Adultos', this)">👨‍💼 ADULTOS</button>
+            <button class="segment-btn pediatria" onclick="setCongress('Pediatría', this)">👦 PEDIATRÍA</button>
+        </div>
+        <input type="text" id="searchBox" placeholder="Buscar charla o pregunta..." oninput="filterQuestions()">
+        <button class="refresh-btn" onclick="fetchQuestions()">↻ Actualizar</button>
+    </div>
+
+    <div id="loading">Conectando con la base de datos...</div>
+
+    <div class="container" id="questionsContainer">
+        <!-- Preguntas se cargarán aquí -->
+    </div>
+
+    <script>
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxe9Uj661yk4CdagigjRwsBtmQe-tfu7Y-DQP48h7gEBINxmomyAivQGQALSoAJ7CPT/exec";
+        let allQuestions = [];
+        let currentCongress = 'Adultos';
+
+        function setCongress(val, btn) {
+            currentCongress = val;
+            document.querySelectorAll('.segment-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            fetchQuestions();
+        }
+
+        async function fetchQuestions() {
+            if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes("TODO")) {
+                console.error("URL de script no configurada");
+                return;
+            }
+
+            try {
+                const response = await fetch(GOOGLE_SCRIPT_URL + "?action=getQuestions&congreso=" + encodeURIComponent(currentCongress));
+                const data = await response.json();
+                
+                allQuestions = data.reverse();
+                renderQuestions(allQuestions);
+                document.getElementById('loading').style.display = 'none';
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('loading').innerText = "Error al cargar preguntas. Revisa la consola.";
+            }
+        }
+
+        function renderQuestions(questions) {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            if (questions.length === 0) {
+                container.innerHTML = '<div class="empty-state"><h3>No hay preguntas aún.</h3><p>Las preguntas que los asistentes hagan en la App aparecerán aquí automáticamente.</p></div>';
+                return;
+            }
+
+            questions.forEach(q => {
+                const isPediatria = q.Congreso === "Pediatría";
+                const badgeClass = isPediatria ? "badge-pediatria" : "badge-adultos";
+                const badgeText = isPediatria ? "👦 PEDIATRÍA" : "👨‍💼 ADULTOS";
+
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                card.innerHTML = `
+                    <div class="badge ${badgeClass}">${badgeText}</div>
+                    <span class="talk-title">${q.Charla || 'Sesión General'}</span>
+                    <div class="question-text">${q.Pregunta || q.Comentario || ''}</div>
+                    <div class="meta">
+                        <span class="speaker">👤 ${q.Ponente || 'Invitado'}</span>
+                        <span class="time">⏰ ${q.Timestamp || q.Fecha || ''}</span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function filterQuestions() {
+            const term = document.getElementById('searchBox').value.toLowerCase();
+            const filtered = allQuestions.filter(q => 
+                (q.Charla && q.Charla.toLowerCase().includes(term)) || 
+                (q.Pregunta && q.Pregunta.toLowerCase().includes(term)) ||
+                (q.Ponente && q.Ponente.toLowerCase().includes(term))
+            );
+            renderQuestions(filtered);
+        }
+
+        // Cargar al inicio
+        fetchQuestions();
+
+        // Auto-refresh cada 15 segundos
+        setInterval(fetchQuestions, 15000);
+    </script>
+</body>
+
+</html>

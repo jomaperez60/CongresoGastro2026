@@ -1,4 +1,4 @@
-const CACHE_NAME = 'med-v2';
+const CACHE_NAME = 'med-v3';
 const assets = ['./', 'index.html', 'manifest.json'];
 
 self.addEventListener('install', e => {
