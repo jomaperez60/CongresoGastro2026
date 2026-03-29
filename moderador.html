@@ -66,9 +66,20 @@
         }
 
         @keyframes pulse-animation {
-            0% { transform: scale(0.9); opacity: 0.7; }
-            50% { transform: scale(1.2); opacity: 1; }
-            100% { transform: scale(0.9); opacity: 0.7; }
+            0% {
+                transform: scale(0.9);
+                opacity: 0.7;
+            }
+
+            50% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(0.9);
+                opacity: 0.7;
+            }
         }
 
         .controls {
@@ -112,7 +123,7 @@
             padding: 4px;
             border-radius: 30px;
             gap: 4px;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .segment-btn {
@@ -163,8 +174,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .question-card:hover {
@@ -228,7 +246,7 @@
             text-transform: uppercase;
             margin-bottom: 15px;
             letter-spacing: 1px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .badge-adultos {
@@ -281,7 +299,7 @@
             margin-bottom: 30px;
             background: #fff;
             border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
             padding: 20px;
         }
 
@@ -305,7 +323,7 @@
             align-items: center;
             gap: 10px;
         }
-        
+
         .module-count {
             font-size: 0.9rem;
             color: #666;
@@ -315,7 +333,8 @@
             border-radius: 12px;
         }
 
-        .btn-archive, .btn-unarchive {
+        .btn-archive,
+        .btn-unarchive {
             border: none;
             padding: 8px 16px;
             border-radius: 20px;
@@ -385,9 +404,18 @@
         }
 
         @media (max-width: 600px) {
-            .controls { flex-direction: column; }
-            .questions-grid { grid-template-columns: 1fr; }
-            .module-header { flex-direction: column; align-items: flex-start; }
+            .controls {
+                flex-direction: column;
+            }
+
+            .questions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .module-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
         }
     </style>
 </head>
@@ -397,7 +425,9 @@
     <header>
         <h1>Panel de Moderación en Vivo</h1>
         <p>XVII Congreso Internacional de Gastroenterología</p>
-        <div class="status-badge"><div class="pulse"></div> EN VIVO</div>
+        <div class="status-badge">
+            <div class="pulse"></div> EN VIVO
+        </div>
     </header>
 
     <div class="controls">
@@ -483,18 +513,18 @@
         async function fetchModuloMapping() {
             try {
                 // Si lo abres desde tu computadora (file://), esto no se ejecutará para evitar el error.
-                if (window.location.protocol === 'file:') return; 
-                
+                if (window.location.protocol === 'file:') return;
+
                 const response = await fetch('index.html');
                 if (!response.ok) return;
-                
+
                 const html = await response.text();
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
-                
+
                 let currentModule = "General";
                 const items = doc.querySelectorAll('.modulo-header, .agenda-item');
-                
+
                 items.forEach(el => {
                     if (el.classList.contains('modulo-header')) {
                         currentModule = el.textContent.replace(/\s+/g, ' ').trim();
@@ -544,9 +574,9 @@
             try {
                 const response = await fetch(GOOGLE_SCRIPT_URL + "?action=getQuestions&congreso=" + encodeURIComponent(currentCongress));
                 const data = await response.json();
-                
+
                 allQuestions = data.reverse();
-                
+
                 renderQuestions(allQuestions);
                 document.getElementById('loading').style.display = 'none';
             } catch (error) {
@@ -597,20 +627,20 @@
 
             // Agrupar preguntas por Módulo -> Charla
             const groupsByModule = {};
-            
+
             questions.forEach(q => {
                 const rawCharlaTitle = q.Charla || 'Sesión General';
                 const charlaDisplayTitle = rawCharlaTitle.replace(/\s+/g, ' ').trim();
                 const charlaKey = charlaDisplayTitle.toLowerCase();
                 const moduleName = talkToModuleMap[charlaKey] || 'Otros / Sesión General';
-                
+
                 if (!groupsByModule[moduleName]) {
                     groupsByModule[moduleName] = {};
                 }
                 if (!groupsByModule[moduleName][charlaDisplayTitle]) {
                     groupsByModule[moduleName][charlaDisplayTitle] = [];
                 }
-                
+
                 groupsByModule[moduleName][charlaDisplayTitle].push(q);
             });
 
@@ -708,8 +738,8 @@
 
         function filterQuestions() {
             const term = document.getElementById('searchBox').value.toLowerCase();
-            const filtered = allQuestions.filter(q => 
-                (q.Charla && q.Charla.toLowerCase().includes(term)) || 
+            const filtered = allQuestions.filter(q =>
+                (q.Charla && q.Charla.toLowerCase().includes(term)) ||
                 (q.Pregunta && q.Pregunta.toLowerCase().includes(term)) ||
                 (q.Ponente && q.Ponente.toLowerCase().includes(term))
             );
@@ -721,7 +751,7 @@
             await fetchModuloMapping();
             fetchQuestions();
         }
-        
+
         init();
 
         // Auto-refresh cada 15 segundos
