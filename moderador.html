@@ -545,17 +545,18 @@
             
             questions.forEach(q => {
                 const rawCharlaTitle = q.Charla || 'Sesión General';
-                const charlaTitle = rawCharlaTitle.replace(/\s+/g, ' ').trim().toLowerCase();
-                const moduleName = talkToModuleMap[charlaTitle] || 'Otros / Sesión General';
+                const charlaDisplayTitle = rawCharlaTitle.replace(/\s+/g, ' ').trim();
+                const charlaKey = charlaDisplayTitle.toLowerCase();
+                const moduleName = talkToModuleMap[charlaKey] || 'Otros / Sesión General';
                 
                 if (!groupsByModule[moduleName]) {
                     groupsByModule[moduleName] = {};
                 }
-                if (!groupsByModule[moduleName][charlaTitle]) {
-                    groupsByModule[moduleName][charlaTitle] = [];
+                if (!groupsByModule[moduleName][charlaDisplayTitle]) {
+                    groupsByModule[moduleName][charlaDisplayTitle] = [];
                 }
                 
-                groupsByModule[moduleName][charlaTitle].push(q);
+                groupsByModule[moduleName][charlaDisplayTitle].push(q);
             });
 
             const archivedNames = getArchivedModules();
@@ -595,13 +596,8 @@
                     `;
 
                     moduleQuestions.forEach(q => {
-                        const isPediatria = q.Congreso === "Pediatría";
-                        const badgeClass = isPediatria ? "badge-pediatria" : "badge-adultos";
-                        const badgeText = isPediatria ? "👦 PEDIATRÍA" : "👨‍💼 ADULTOS";
-
                         groupHtml += `
                             <div class="question-card">
-                                <div class="badge ${badgeClass}">${badgeText}</div>
                                 <div class="question-text">${q.Pregunta || q.Comentario || ''}</div>
                                 <div class="meta">
                                     <span class="speaker">👤 ${q.Ponente || 'Invitado'}</span>

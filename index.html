@@ -1594,9 +1594,9 @@
             if (!omitirBotones) {
                 const isPediatria = !!item.closest('#programa-pediatria');
                 const charlaEl = item.querySelector('.charla');
-                const titulo = charlaEl ? charlaEl.innerText.trim() : 'Charla';
+                const titulo = charlaEl ? charlaEl.textContent.replace(/\s+/g, ' ').trim() : 'Charla';
                 const ponenteEl = item.querySelector('.ponente');
-                const ponente = ponenteEl ? ponenteEl.innerText : 'Ponente';
+                const ponente = ponenteEl ? ponenteEl.textContent.replace(/\s+/g, ' ').trim() : 'Ponente';
                 
                 let baseLink = isPediatria 
                     ? "https://app.sli.do/event/hwiK2pFhHCVDs8penRiuYz" 
