@@ -171,6 +171,45 @@
             transform: translateY(-5px);
         }
 
+        .question-card.answered {
+            opacity: 0.6;
+            background-color: #f9f9f9;
+            border-left-color: #28a745;
+        }
+
+        .question-card.answered .question-text {
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        .card-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .btn-sm-action {
+            background: none;
+            border: 1px solid #ccc;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: 0.2s;
+            font-weight: bold;
+        }
+
+        .btn-sm-action.btn-check {
+            color: #28a745;
+            border-color: #28a745;
+        }
+
+        .btn-sm-action.btn-check:hover {
+            background: #28a745;
+            color: white;
+        }
+
         .talk-title {
             font-size: 1rem;
             font-weight: 800;
@@ -481,6 +520,21 @@
             fetchQuestions();
         }
 
+        // Helpers para Borrar y Marcar Contestada (persistencia local)
+        function getSafeQuestionId(q) {
+            return btoa(unescape(encodeURIComponent((q.Timestamp || '') + (q.Pregunta || q.Comentario || '')))).replace(/[^a-zA-Z0-9]/g, '');
+        }
+
+        function getAnsweredQuestions() { return JSON.parse(localStorage.getItem('answeredQuestions')) || []; }
+
+        function toggleAnswered(id) {
+            let arr = getAnsweredQuestions();
+            if (arr.includes(id)) { arr = arr.filter(x => x !== id); }
+            else { arr.push(id); }
+            localStorage.setItem('answeredQuestions', JSON.stringify(arr));
+            filterQuestions(); // Solo redibujar sin refetch
+        }
+
         async function fetchQuestions() {
             if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes("TODO")) {
                 console.error("URL de script no configurada");
@@ -492,6 +546,7 @@
                 const data = await response.json();
                 
                 allQuestions = data.reverse();
+                
                 renderQuestions(allQuestions);
                 document.getElementById('loading').style.display = 'none';
             } catch (error) {
@@ -596,8 +651,16 @@
                     `;
 
                     moduleQuestions.forEach(q => {
+                        const qId = getSafeQuestionId(q);
+                        const isAnswered = getAnsweredQuestions().includes(qId);
+                        const answeredClass = isAnswered ? 'answered' : '';
+                        const checkBtnText = isAnswered ? 'Desmarcar' : '✅ Contestada';
+
                         groupHtml += `
-                            <div class="question-card">
+                            <div class="question-card ${answeredClass}">
+                                <div class="card-actions">
+                                    <button class="btn-sm-action btn-check" onclick="toggleAnswered('${qId}')">${checkBtnText}</button>
+                                </div>
                                 <div class="question-text">${q.Pregunta || q.Comentario || ''}</div>
                                 <div class="meta">
                                     <span class="speaker">👤 ${q.Ponente || 'Invitado'}</span>
