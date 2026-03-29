@@ -143,6 +143,10 @@
         .container {
             max-width: 1000px;
             margin: 0 auto;
+            display: block;
+        }
+
+        .questions-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
@@ -234,9 +238,117 @@
             color: var(--azul-primario);
         }
 
+        .module-group {
+            margin-bottom: 30px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            padding: 20px;
+        }
+
+        .module-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--azul-primario);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .module-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--azul-primario);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .module-count {
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: normal;
+            background: #e9ecef;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+
+        .btn-archive, .btn-unarchive {
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: bold;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-archive {
+            background-color: #ff9800;
+            color: white;
+        }
+
+        .btn-archive:hover {
+            background-color: #e68a00;
+            transform: scale(1.05);
+        }
+
+        .btn-unarchive {
+            background-color: var(--verde-exito);
+            color: white;
+        }
+
+        .btn-unarchive:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+
+        .archived-section {
+            margin-top: 40px;
+            border-top: 2px dashed #ccc;
+            padding-top: 20px;
+            text-align: center;
+        }
+
+        .archived-header {
+            margin-bottom: 20px;
+        }
+
+        .btn-toggle-archived {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+        .btn-toggle-archived:hover {
+            background: #5a6268;
+        }
+
+        #archivedContainer {
+            display: none;
+            text-align: left;
+        }
+
+        #archivedContainer.show {
+            display: block;
+        }
+
         @media (max-width: 600px) {
             .controls { flex-direction: column; }
-            .container { grid-template-columns: 1fr; }
+            .questions-grid { grid-template-columns: 1fr; }
+            .module-header { flex-direction: column; align-items: flex-start; }
         }
     </style>
 </head>
@@ -268,6 +380,99 @@
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxe9Uj661yk4CdagigjRwsBtmQe-tfu7Y-DQP48h7gEBINxmomyAivQGQALSoAJ7CPT/exec";
         let allQuestions = [];
         let currentCongress = 'Adultos';
+        const talkToModuleMap = {
+            "¿cómo debemos abordar la dispepsia funcional en 2026 en latinoamérica?": "MÓDULO 1: ESÓFAGO Y ESTÓMAGO",
+            "disfagia esofágica: claves clínicas para el médico no especialista": "MÓDULO 1: ESÓFAGO Y ESTÓMAGO",
+            "manejo del erge en la era de los pcabs: ¿los ibp se quedan o se van?": "MÓDULO 1: ESÓFAGO Y ESTÓMAGO",
+            "reflujo laringofaríngeo: no todo es ácido, no todo es reflujo": "MÓDULO 1: ESÓFAGO Y ESTÓMAGO",
+            "enfermedad celíaca: cuándo sospecharla y cómo confirmarla correctamente": "MÓDULO 2: INTESTINO DELGADO Y COLON",
+            "nuevas perspectivas terapéuticas en el síndrome de intestino irritable": "MÓDULO 2: INTESTINO DELGADO Y COLON",
+            "diarrea crónica: enfoque diagnóstico paso a paso": "MÓDULO 2: INTESTINO DELGADO Y COLON",
+            "distensión abdominal: abordaje integral": "MÓDULO 2: INTESTINO DELGADO Y COLON",
+            "rol de prebióticos y probióticos en la recuperación de la microbiota intestinal": "🍽 SIMPOSIO COMIDA",
+            "actualidades en la pancreatitis autoinmune": "MÓDULO 3: PÁNCREAS",
+            "use en enfermedades pancreáticas": "MÓDULO 3: PÁNCREAS",
+            "avances en el diagnóstico y tratamiento de la pancreatitis aguda": "MÓDULO 3: PÁNCREAS",
+            "cómo diagnosticamos y manejamos la insuficiencia pancreática exocrina": "MÓDULO 3: PÁNCREAS",
+            "recomendaciones sobre el diagnóstico, caracterización y manejo de los pólipos del colon: visión del coloproctólogo": "MÓDULO 4: COLON",
+            "diagnóstico y seguimiento de cáncer colorrectal": "MÓDULO 4: COLON",
+            "enfermedad diverticular": "MÓDULO 4: COLON",
+            "actualidades en el manejo de lesiones anorrectales benignas: claves de diagnóstico y manejo para el consultorio": "MÓDULO 4: COLON",
+            "masld como un problema creciente de salud pública mundial": "MÓDULO 5: HÍGADO Y OBESIDAD",
+            "riesgo cardiovascular en masld y estrategias de control": "MÓDULO 5: HÍGADO Y OBESIDAD",
+            "terapias específicas nuevas y emergentes en masld": "MÓDULO 5: HÍGADO Y OBESIDAD",
+            "obesidad: lo que el gastroenterólogo debe saber": "MÓDULO 5: HÍGADO Y OBESIDAD",
+            "estudios diagnósticos para la disfagia orofaríngea": "MÓDULO 6: ESTUDIOS DIAGNÓSTICOS EN NEUROGASTROENTEROLOGÍA",
+            "ph-metría, ph-impedancia, bravo: ¿cuál, cómo y por qué?": "MÓDULO 6: ESTUDIOS DIAGNÓSTICOS EN NEUROGASTROENTEROLOGÍA",
+            "pruebas de aliento: lo que debemos saber": "MÓDULO 6: ESTUDIOS DIAGNÓSTICOS EN NEUROGASTROENTEROLOGÍA",
+            "manometría anorrectal: ¿cuándo, cómo y por qué?": "MÓDULO 6: ESTUDIOS DIAGNÓSTICOS EN NEUROGASTROENTEROLOGÍA",
+            "rol del biofeedback en los trastornos anorrectales": "MÓDULO 6: ESTUDIOS DIAGNÓSTICOS EN NEUROGASTROENTEROLOGÍA",
+            "\"estreñimiento crónico: una sola entidad con diversas caras\"": "🍽 SIMPOSIO COMIDA SLNG",
+            "helicobacter pylori: qué dicen las guías de manejo y qué es aplicable a nuestro medio": "MÓDULO 7: HELICOBACTER PYLORI Y CANCER GÁSTRICO",
+            "tratamiento de h. pylori: errores frecuentes, opciones de rescate y cuándo detenerse": "MÓDULO 7: HELICOBACTER PYLORI Y CANCER GÁSTRICO",
+            "lesiones premalignas gástricas: ¿qué hacer y cada cuánto vigilar?": "MÓDULO 7: HELICOBACTER PYLORI Y CANCER GÁSTRICO",
+            "cáncer gástrico: detección oportuna y papel del médico no especialista": "MÓDULO 7: HELICOBACTER PYLORI Y CANCER GÁSTRICO",
+            "comunicación médica en redes sociales: estrategias, alcance y límites.": "MÓDULO 8: LAS REDES SOCIALES Y LA INTELIGENCIA ARTIFICIAL",
+            "ia práctica en la consulta y en endoscopia: herramientas válidas y cómo integrarlas.": "MÓDULO 8: LAS REDES SOCIALES Y LA INTELIGENCIA ARTIFICIAL",
+            "cómo usar las redes sociales y otras herramientas para hacer proyectos de investigación.": "MÓDULO 8: LAS REDES SOCIALES Y LA INTELIGENCIA ARTIFICIAL",
+            "riesgos, ética y regulación: desinformación, privacidad y responsabilidad clínica al usar ia y redes.": "MÓDULO 8: LAS REDES SOCIALES Y LA INTELIGENCIA ARTIFICIAL",
+            "hemorragia digestiva alta en pacientes anticoagulados y adultos mayores: cómo actuar?": "MÓDULO 9: HEMORRAGIA DIGESTIVA",
+            "scores pronósticos en hemorragia digestiva alta: cuáles y cómo aplicarlos?": "MÓDULO 9: HEMORRAGIA DIGESTIVA",
+            "hemorragia de intestino medio ¿cuándo solicitar exámenes y cuáles tenemos disponibles?": "MÓDULO 9: HEMORRAGIA DIGESTIVA",
+            "hay algo nuevo en el manejo de la hemorragia digestiva alta en 2026?": "MÓDULO 9: HEMORRAGIA DIGESTIVA",
+            "herramientas no invasivas para el diagnóstico de fibrosis hepática e hipertensión portal: tips de su uso en la práctica diaria": "MÓDULO 10: HEPATOLOGÍA",
+            "nutrición y fragilidad en el paciente cirrótico: lo estamos tomando en cuenta en el consultorio?": "MÓDULO 10: HEPATOLOGÍA",
+            "el cirrótico con daño renal: cómo hacer el diagnóstico temprano y adoptar el manejo adecuado": "MÓDULO 10: HEPATOLOGÍA",
+            "actualidades en el manejo de la ascitis": "MÓDULO 10: HEPATOLOGÍA",
+            "dietas de moda y restricciones innecesarias: ¿estamos nutriendo o limitando a nuestros pacientes?": "BLOQUE 1: Nutrición y Desafíos Hepáticos Tempranos",
+            "el abc de las transaminasas: ¿cuándo observar y cuándo derivar al especialista?": "BLOQUE 1: Nutrición y Desafíos Hepáticos Tempranos",
+            "colestasis neonatal y del lactante: claves para un abordaje inicial que salva vidas": "BLOQUE 1: Nutrición y Desafíos Hepáticos Tempranos",
+            "guía práctica para el manejo de la obesidad: más allá del cálculo del imc": "BLOQUE 2: La Pandemia Silenciosa: Inflamación Metabólica y MASLD",
+            "realidad local del daño hepático: resultados del estudio de fibroscan en niños con sobrepeso y obesidad": "BLOQUE 2: La Pandemia Silenciosa: Inflamación Metabólica y MASLD",
+            "masld y microbiota: entendiendo el eje intestino-hígado como motor de la inflamación metabólica": "BLOQUE 2: La Pandemia Silenciosa: Inflamación Metabólica y MASLD",
+            "el músculo como órgano endocrino: actividad física como piedra angular en el tratamiento del hígado graso": "BLOQUE 2: La Pandemia Silenciosa: Inflamación Metabólica y MASLD",
+            "¿es realmente reflujo? desmitificando la asociación entre síntomas respiratorios y erge": "BLOQUE 3: Dilemas en la Consulta: Entre la Evidencia y la Innovación",
+            "sospecha de aplv en atención primaria: uso estratégico del score comiss y cuándo actuar": "BLOQUE 3: Dilemas en la Consulta: Entre la Evidencia y la Innovación",
+            "\"microbiota intestinal: entre la ciencia, el mito y la práctica clínica basada en evidencia\"": "BLOQUE 3: Dilemas en la Consulta: Entre la Evidencia y la Innovación",
+            "el pediatra 4.0: integrando la inteligencia artificial en la práctica clínica diaria": "BLOQUE 3: Dilemas en la Consulta: Entre la Evidencia y la Innovación",
+            "charla magistral: introducción a roma v": "SPEAKER TOUR ROMA V LATAM",
+            "tracto digestivo superior": "SPEAKER TOUR ROMA V LATAM",
+            "tracto digestivo inferior": "SPEAKER TOUR ROMA V LATAM"
+        };
+
+        // Función para actualizar automáticamente si está hosteado en la web (Ej. Netlify)
+        async function fetchModuloMapping() {
+            try {
+                // Si lo abres desde tu computadora (file://), esto no se ejecutará para evitar el error.
+                if (window.location.protocol === 'file:') return; 
+                
+                const response = await fetch('index.html');
+                if (!response.ok) return;
+                
+                const html = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                
+                let currentModule = "General";
+                const items = doc.querySelectorAll('.modulo-header, .agenda-item');
+                
+                items.forEach(el => {
+                    if (el.classList.contains('modulo-header')) {
+                        currentModule = el.textContent.replace(/\s+/g, ' ').trim();
+                    } else if (el.classList.contains('agenda-item')) {
+                        const charlaEl = el.querySelector('.charla');
+                        if (charlaEl) {
+                            // Al sobreescribir el diccionario base local, siempre se usará lo de index.html
+                            const charlaTitle = charlaEl.textContent.replace(/\s+/g, ' ').trim().toLowerCase();
+                            talkToModuleMap[charlaTitle] = currentModule;
+                        }
+                    }
+                });
+                console.log("Agenda actualizada dinámicamente desde index.html.");
+            } catch (error) {
+                console.log("Usando mapa incrustado localmente (offline o file://).");
+            }
+        }
 
         function setCongress(val, btn) {
             currentCongress = val;
@@ -295,6 +500,37 @@
             }
         }
 
+        function getArchivedModules() {
+            try {
+                return JSON.parse(localStorage.getItem('archivedTalks')) || [];
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function toggleArchive(moduleName) {
+            let archived = getArchivedModules();
+            if (archived.includes(moduleName)) {
+                archived = archived.filter(m => m !== moduleName);
+            } else {
+                archived.push(moduleName);
+            }
+            localStorage.setItem('archivedTalks', JSON.stringify(archived));
+            filterQuestions(); // Re-render with new state
+        }
+
+        function toggleArchivedView() {
+            const container = document.getElementById('archivedContainer');
+            const btn = document.getElementById('btnToggleArchived');
+            if (container.classList.contains('show')) {
+                container.classList.remove('show');
+                btn.innerText = 'Ver módulos pasados ▼';
+            } else {
+                container.classList.add('show');
+                btn.innerText = 'Ocultar módulos pasados ▲';
+            }
+        }
+
         function renderQuestions(questions) {
             const container = document.getElementById('questionsContainer');
             container.innerHTML = '';
@@ -304,24 +540,111 @@
                 return;
             }
 
+            // Agrupar preguntas por Módulo -> Charla
+            const groupsByModule = {};
+            
             questions.forEach(q => {
-                const isPediatria = q.Congreso === "Pediatría";
-                const badgeClass = isPediatria ? "badge-pediatria" : "badge-adultos";
-                const badgeText = isPediatria ? "👦 PEDIATRÍA" : "👨‍💼 ADULTOS";
+                const rawCharlaTitle = q.Charla || 'Sesión General';
+                const charlaTitle = rawCharlaTitle.replace(/\s+/g, ' ').trim().toLowerCase();
+                const moduleName = talkToModuleMap[charlaTitle] || 'Otros / Sesión General';
+                
+                if (!groupsByModule[moduleName]) {
+                    groupsByModule[moduleName] = {};
+                }
+                if (!groupsByModule[moduleName][charlaTitle]) {
+                    groupsByModule[moduleName][charlaTitle] = [];
+                }
+                
+                groupsByModule[moduleName][charlaTitle].push(q);
+            });
 
-                const card = document.createElement('div');
-                card.className = 'question-card';
-                card.innerHTML = `
-                    <div class="badge ${badgeClass}">${badgeText}</div>
-                    <span class="talk-title">${q.Charla || 'Sesión General'}</span>
-                    <div class="question-text">${q.Pregunta || q.Comentario || ''}</div>
-                    <div class="meta">
-                        <span class="speaker">👤 ${q.Ponente || 'Invitado'}</span>
-                        <span class="time">⏰ ${q.Timestamp || q.Fecha || ''}</span>
+            const archivedNames = getArchivedModules();
+            let activeHtml = '';
+            let archivedHtml = '';
+            let hasArchived = false;
+
+            for (const [moduleName, charlas] of Object.entries(groupsByModule)) {
+                const isArchived = archivedNames.includes(moduleName);
+                if (isArchived) hasArchived = true;
+
+                // Contar total de preguntas en este módulo
+                let totalPreguntasModulo = 0;
+                for (const charlaQs of Object.values(charlas)) {
+                    totalPreguntasModulo += charlaQs.length;
+                }
+
+                let groupHtml = `
+                    <div class="module-group">
+                        <div class="module-header" style="background-color: var(--azul-primario); color: white; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                            <h2 class="module-title" style="color: white; font-size: 1.5rem;">
+                                ${moduleName} 
+                                <span class="module-count" style="background: rgba(255,255,255,0.2); color: white;">${totalPreguntasModulo} preguntas</span>
+                            </h2>
+                            <button class="${isArchived ? 'btn-unarchive' : 'btn-archive'}" style="background-color: ${isArchived ? '#28a745' : '#ffc107'}; color: #333;" onclick="toggleArchive('${moduleName.replace(/'/g, "\\'")}')">
+                                ${isArchived ? 'Desarchivar' : 'Archivar módulo'}
+                            </button>
+                        </div>
+                `;
+
+                // Renderizar sub-bloques por Charla
+                for (const [charlaTitle, moduleQuestions] of Object.entries(charlas)) {
+                    groupHtml += `
+                        <div class="charla-subgroup" style="margin-bottom: 25px; padding-left: 10px; border-left: 3px solid #ccc;">
+                            <h3 style="color: var(--azul-primario); margin-top: 0; margin-bottom: 15px; font-size: 1.2rem;">${charlaTitle} <span style="font-size: 0.85rem; color: #888;">(${moduleQuestions.length})</span></h3>
+                            <div class="questions-grid">
+                    `;
+
+                    moduleQuestions.forEach(q => {
+                        const isPediatria = q.Congreso === "Pediatría";
+                        const badgeClass = isPediatria ? "badge-pediatria" : "badge-adultos";
+                        const badgeText = isPediatria ? "👦 PEDIATRÍA" : "👨‍💼 ADULTOS";
+
+                        groupHtml += `
+                            <div class="question-card">
+                                <div class="badge ${badgeClass}">${badgeText}</div>
+                                <div class="question-text">${q.Pregunta || q.Comentario || ''}</div>
+                                <div class="meta">
+                                    <span class="speaker">👤 ${q.Ponente || 'Invitado'}</span>
+                                    <span class="time">⏰ ${q.Timestamp || q.Fecha || ''}</span>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    groupHtml += `</div></div>`; // Cierre de questions-grid y charla-subgroup
+                }
+
+                groupHtml += `</div>`; // Cierre de module-group
+
+                if (isArchived) {
+                    archivedHtml += groupHtml;
+                } else {
+                    activeHtml += groupHtml;
+                }
+            }
+
+            // Preservar estado del toggle si ya existía
+            const oldContainer = document.getElementById('archivedContainer');
+            const isArchivadosVisible = oldContainer ? oldContainer.classList.contains('show') : false;
+
+            let finalHtml = activeHtml;
+
+            if (hasArchived) {
+                finalHtml += `
+                    <div class="archived-section">
+                        <div class="archived-header">
+                            <button id="btnToggleArchived" class="btn-toggle-archived" onclick="toggleArchivedView()">
+                                ${isArchivadosVisible ? 'Ocultar módulos pasados ▲' : 'Ver módulos pasados ▼'}
+                            </button>
+                        </div>
+                        <div id="archivedContainer" class="${isArchivadosVisible ? 'show' : ''}">
+                            ${archivedHtml}
+                        </div>
                     </div>
                 `;
-                container.appendChild(card);
-            });
+            }
+
+            container.innerHTML = finalHtml || '<div class="empty-state"><h3>No hay preguntas activas.</h3><p>Todos los módulos están archivados.</p></div>';
         }
 
         function filterQuestions() {
@@ -335,7 +658,12 @@
         }
 
         // Cargar al inicio
-        fetchQuestions();
+        async function init() {
+            await fetchModuloMapping();
+            fetchQuestions();
+        }
+        
+        init();
 
         // Auto-refresh cada 15 segundos
         setInterval(fetchQuestions, 15000);
