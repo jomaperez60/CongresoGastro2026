@@ -1088,6 +1088,27 @@
                 <h4>Dr. Francisco Guarner</h4>
                 <p>España</p>
             </div>
+            <!-- PONETES PEDIATRÍA -->
+            <div class="speaker-card" onclick="abrirModalSpeaker(this, 'Julián Fernández')">
+                <img src="img/speakers/julian_fernandez.jpg" class="speaker-photo" alt="Dr. Julián Fernández S." onerror="this.style.display='none'" loading="lazy">
+                <h4>Dr. Julián Fernández S.</h4>
+                <p>Argentina</p>
+            </div>
+            <div class="speaker-card" onclick="abrirModalSpeaker(this, 'Carlos Timossi')">
+                <img src="img/speakers/carlos_timossi.jpg" class="speaker-photo" alt="Dr. Carlos Timossi B." onerror="this.style.display='none'" loading="lazy">
+                <h4>Dr. Carlos Timossi B.</h4>
+                <p>Argentina / México</p>
+            </div>
+            <div class="speaker-card" onclick="abrirModalSpeaker(this, 'Mariana Espriu')">
+                <img src="img/speakers/mariana_espriu.jpg" class="speaker-photo" alt="Dra. Mariana Xail Espriu R." onerror="this.style.display='none'" loading="lazy">
+                <h4>Dra. Mariana Xail Espriu R.</h4>
+                <p>México</p>
+            </div>
+            <div class="speaker-card" onclick="abrirModalSpeaker(this, 'Carlos Velasco')">
+                <img src="img/speakers/carlos_velasco.jpg" class="speaker-photo" alt="Dr. Carlos Velasco B." onerror="this.style.display='none'" loading="lazy">
+                <h4>Dr. Carlos Velasco B.</h4>
+                <p>Colombia</p>
+            </div>
         </div>
     </div>
 
@@ -1389,7 +1410,11 @@
 
         // Lógica del Speaker Modal
         const speakerBios = {
-            'Graciela Castro': `• Medica Internista, Gastroenteróloga, Endoscopista, Hepatóloga y Trasplante Hepático<br>• Jefa de Hepatología y Trasplante Hospital Médica Sur<br>• Médica adscrita al Departamento de Gastroenterología Instituto Nacional de Ciencias Médicas y Nutrición "Salvador Zubirán"<br>• Past President de la Asociación Latinoamericana para el Estudio del Hígado<br>• Ex Presidenta Asociación Mexicana de Hepatología<br>• Académica de la Academia Nacional de Cirugía de México<br>• Académica de la Academia Nacional de Medicina de México<br>• Sistema Nacional de Investigadores Nivel I, México<br>• Profesora Titular de Gastroenterología de la Universidad Nacional Autónoma de México<br>• Profesora de Gastroenterología de Universidad Panamericana`
+            'Graciela Castro': `• Medica Internista, Gastroenteróloga, Endoscopista, Hepatóloga y Trasplante Hepático<br>• Jefa de Hepatología y Trasplante Hospital Médica Sur<br>• Médica adscrita al Departamento de Gastroenterología Instituto Nacional de Ciencias Médicas y Nutrición "Salvador Zubirán"<br>• Past President de la Asociación Latinoamericana para el Estudio del Hígado<br>• Ex Presidenta Asociación Mexicana de Hepatología<br>• Académica de la Academia Nacional de Cirugía de México<br>• Académica de la Academia Nacional de Medicina de México<br>• Sistema Nacional de Investigadores Nivel I, México<br>• Profesora Titular de Gastroenterología de la Universidad Nacional Autónoma de México<br>• Profesora de Gastroenterología de Universidad Panamericana`,
+            'Julián Fernández': `• Médico Gastroenterólogo Pediátrico – Endoscopía y Motilidad Digestiva, Universidad de Buenos Aires, Argentina<br>• Encargado del sector de Gastroenterología y endoscopia Infantil - Hospital Materno Infantil de Tigre -"Dr. Florencio Escardó"<br>• Coordinador del working group de trastornos del eje intestino cerebro – LASPGHAN<br>• Docente de ENDIBA (sociedad de endoscopistas digestivos de Buenos Aires)<br>• Miembro del grupo de investigación FINDERS (Functional International Digestive Epidemiological Research Survey)<br>• Disertante, panelista y coordinador en congresos internacionales de gastroenterología pediátrica en Latinoamérica (LASPGHAN, SAP, CIDEMO)`,
+            'Carlos Timossi': `• Químico y Bioquímico por la Universidad Nacional de La Plata, Argentina<br>• Doctorado en Ciencias Biomédicas con orientación Farmacología, Universidad Nacional Autónoma de México (UNAM)<br>• Posdoctorado en el Oregon National Primate Research Center de la Oregon Health and Sciences University, Oregon, Estados Unidos de América.<br>• Socio y Director de Investigación y Desarrollor de Miramar MedCom (México) y Director Ejecutivo de Miramar MedCom (LATAM)<br>• Secretario Ejecutivo de la Sociedad Latinoamericana de Gastroenterología, Hepatología y Nutrición Pediátrica (LASPGHAN).<br>• Desarrollador de aplicaciones diagnósticas de inteligencia artificial (Síndromes Colestásicos en Recién Nacidos, escala BITSS, Chatbot)`,
+            'Mariana Espriu': `• Gastroenterología y Nutrición Pediátrica por el Hospital Infantil de México, Federico Gómez/Universidad Nacional Autónoma de México.<br>• Formación International Observer, Pediatric Gastroenterology in Department of Medicine. Children´s Mercy, Kansas City, Missouri, U.S.A., 2017.<br>• Coordinadora 2026-2027 del Working Group de Trastornos del Eje Cerebro-Intestino de LASPGHAN.<br>• Autora y coautora de múltiples publicaciones científicas en revistas médicas nacionales e internacionales de gastroenterología, hepatología y nutrición pediátrica.<br>• Miembro activo de la Sociedad Norteamericana (NASPGHAN), Latinoamericana (LASPGHAN) de Gastroenterología, Hepatología y Nutrición Pediátrica y Asociación Mexicana Mexicana de Gastroenterología (AMG)`,
+            'Carlos Velasco': `• Especialista en Nutrición y gastroenterología pediátrica. Universidad Nacional Autónoma de México. Hospital Infantil de México “Federico Gómez”. Ciudad de México<br>• Magíster en Epidemiología<br>• PhD en Medicina Clínica y Salud Pública<br>• Profesor Titular Distinguido. Universidad del Valle<br>• Director Grupo de Investigación GASTROHNUP Cali, Colombia<br>• Comité Pediátrico Mundial. Rome Foundation. Roma, Italia<br>• Expresidente Sociedad Colombiana de Pediatría. Regional Valle del Cauca. Cali, Colombia<br>• Expresidente de la Sociedad Latinoamericana de Gastroenterología, Hepatología y Nutrición Pediátrica. SLAGHNP<br>• Investigador Senior. Convocatoria 957 de 2024. Ministerio Colombiano de Ciencia y Tecnología. Colciencias. Bogotá, Colombia<br>• Director del Grupo de Investigación Gastrohnup. Universidad del Valle. Cali, Colombia<br>• Guest Editor. Journal of Pediatric Gastroenterology and Nutrition. 2008, 2009`
         };
 
         function abrirModalSpeaker(cardElement, keyword) {
