@@ -33,7 +33,6 @@
             color: var(--texto-oscuro);
             transition: background-color 0.3s, color 0.3s;
             padding-bottom: 80px;
-            /* Espacio para el bottom nav */
         }
 
         header {
@@ -739,6 +738,122 @@
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
         }
+
+        /* CME Attendance Styles */
+        .checkin-btn {
+            background: #007bff; /* Cambiado de azul-acento para usar un azul estándar si azul-acento no existe */
+            color: white;
+            border: none;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .checkin-btn.checked {
+            background: var(--verde-exito);
+        }
+
+        .checkin-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.05);
+        }
+
+        .cme-container {
+            padding: 20px;
+            background: var(--fondo-tarjeta);
+            border-radius: 15px;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .cme-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        .cme-stats {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            flex: 1;
+            padding: 15px;
+            background: var(--gris-claro);
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-card span {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--azul-primario);
+        }
+
+        .stat-card label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #666;
+        }
+
+        .asistencia-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .asistencia-info h4 {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--texto-oscuro);
+        }
+
+        .asistencia-info p {
+            margin: 2px 0 0;
+            font-size: 0.75rem;
+            color: #666;
+        }
+
+        .btn-limpiar {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        .perfil-form {
+            margin-bottom: 25px;
+            padding: 15px;
+            background: var(--gris-claro);
+            border-radius: 12px;
+        }
+
+        .perfil-form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+        }
     </style>
 </head>
 
@@ -775,9 +890,9 @@
     <nav>
         <a href="#agenda">Agenda</a>
         <a href="#speakers">Ponentes</a>
+        <a href="#cme">Mi Asistencia</a>
         <a href="#avales">Avales</a>
         <a href="#venue">Sede</a>
-        <a href="#register">Registro</a>
         <a href="javascript:void(0)" id="btnInstall" style="display:none;">Instalar</a>
     </nav>
 
@@ -794,11 +909,11 @@
 
             <div id="jueves" class="tab-content active">
                 <h3 class="day-title">Jueves 30 de Julio</h3>
-                <div class="agenda-item"><span class="hora">07:00 - 07:45</span> <span class="charla">Registro e
+                <div class="agenda-item" id="item-0745"><span class="hora">07:00 - 07:45</span> <span class="charla">Registro e
                         Inauguración</span></div>
-                <div class="agenda-item"><span class="hora">07:45 - 08:00</span> <span class="charla">Palabras de
+                <div class="agenda-item" id="item-0800"><span class="hora">07:45 - 08:00</span> <span class="charla">Palabras de
                         bienvenida: Dr. Jorge Suazo Barahona, presidente de la Asociación Hondureña de
-                        Gastroenterología</span></div>
+                        Gastroenterología.</span></div>
 
                 <div class="modulo-header">MÓDULO 1: ESÓFAGO Y ESTÓMAGO</div>
                 <div class="agenda-item"><span class="hora">08:00 - 08:20</span> <span class="charla">¿Cómo debemos
@@ -1154,6 +1269,38 @@
                 <img src="img/speakers/carlos_velasco.jpg" class="speaker-photo" alt="Dr. Carlos Velasco B." onerror="this.style.display='none'" loading="lazy">
                 <h4>Dr. Carlos Velasco B.</h4>
                 <p>Colombia</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="cme">
+        <h2>Mi Registro de Asistencia (CME)</h2>
+        <div class="cme-container">
+            <div class="perfil-form">
+                <p style="margin-top:0; font-weight:600;">Datos del Asistente</p>
+                <input type="text" id="userName" placeholder="Nombre Completo" onchange="guardarPerfil()">
+                <input type="text" id="userSpecialty" placeholder="Especialidad / Institución" onchange="guardarPerfil()">
+            </div>
+
+            <div class="cme-stats">
+                <div class="stat-card">
+                    <span id="totalCharlas">0</span>
+                    <label>Sesiones</label>
+                </div>
+                <div class="stat-card">
+                    <span id="totalHoras">0</span>
+                    <label>Horas Est.</label>
+                </div>
+            </div>
+
+            <div id="listaAsistencias">
+                <!-- Se llena dinámicamente -->
+                <p style="text-align:center; color:#888; padding:20px;">Aún no has registrado asistencia a ninguna charla.</p>
+            </div>
+
+            <div style="margin-top:20px; display:flex; gap:10px;">
+                <button class="btn-submit" onclick="imprimirCME()" style="flex:1; background:var(--azul-primario);">Exportar Resumen 📄</button>
+                <button class="btn-limpiar" onclick="limpiarCME()">Limpiar Todo</button>
             </div>
         </div>
     </div>
@@ -1696,8 +1843,157 @@
                 evalBtn.addEventListener('click', () => {
                     abrirModal(titulo, ponente);
                 });
+
+                // Botón CME Check-in
+                const checkBtn = document.createElement('button');
+                checkBtn.className = 'checkin-btn';
+                checkBtn.innerHTML = '📌 Asistir';
+                checkBtn.title = "Registrar mi asistencia a esta charla";
+                
+                // Generar un ID único basado en el contenido si no tiene uno
+                const itemId = item.id || 'id-' + btoa(titulo).substring(0,10);
+                item.id = itemId;
+
+                if (localStorage.getItem('cme-' + itemId)) {
+                    checkBtn.classList.add('checked');
+                    checkBtn.innerHTML = '✅ Asistí';
+                }
+
+                checkBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isChecked = checkBtn.classList.toggle('checked');
+                    if (isChecked) {
+                        checkBtn.innerHTML = '✅ Asistí';
+                        localStorage.setItem('cme-' + itemId, JSON.stringify({
+                            titulo: titulo,
+                            ponente: ponente,
+                            hora: item.querySelector('.hora')?.innerText || '',
+                            id: itemId
+                        }));
+                        showToast("Asistencia registrada: " + titulo);
+                    } else {
+                        checkBtn.innerHTML = '📌 Asistir';
+                        localStorage.removeItem('cme-' + itemId);
+                    }
+                    actualizarVistaCME();
+                });
+                actionsDiv.appendChild(checkBtn);
             }
         });
+
+        // Lógica de CME
+        function actualizarVistaCME() {
+            const container = document.getElementById('listaAsistencias');
+            const totalCharlasEl = document.getElementById('totalCharlas');
+            const totalHorasEl = document.getElementById('totalHoras');
+            
+            container.innerHTML = '';
+            let count = 0;
+            let totalMinutes = 0;
+
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key.startsWith('cme-')) {
+                    count++;
+                    const data = JSON.parse(localStorage.getItem(key));
+                    
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'asistencia-item';
+                    itemDiv.innerHTML = `
+                        <div class="asistencia-info">
+                            <h4>${data.titulo}</h4>
+                            <p>${data.ponente} | ${data.hora}</p>
+                        </div>
+                        <button class="btn-limpiar" onclick="eliminarUnaAsistencia('${key}')" style="padding:4px 8px; font-size:0.7rem;">&times;</button>
+                    `;
+                    container.appendChild(itemDiv);
+
+                    // Estimación de horas (asumimos 30-45 min por charla si no se puede calcular)
+                    totalMinutes += 45; 
+                }
+            }
+
+            totalCharlasEl.innerText = count;
+            totalHorasEl.innerText = (totalMinutes / 60).toFixed(1);
+
+            if (count === 0) {
+                container.innerHTML = '<p style="text-align:center; color:#888; padding:20px;">Aún no has registrado asistencia a ninguna charla.</p>';
+            }
+        }
+
+        function eliminarUnaAsistencia(key) {
+            localStorage.removeItem(key);
+            const itemId = key.replace('cme-', '');
+            const btn = document.querySelector(`#${itemId} .checkin-btn`);
+            if (btn) {
+                btn.classList.remove('checked');
+                btn.innerHTML = '📌 Asistir';
+            }
+            actualizarVistaCME();
+        }
+
+        function limpiarCME() {
+            if (confirm("¿Seguro que deseas borrar todo tu registro de asistencia?")) {
+                for (let i = localStorage.length - 1; i >= 0; i--) {
+                    const key = localStorage.key(i);
+                    if (key.startsWith('cme-')) localStorage.removeItem(key);
+                }
+                document.querySelectorAll('.checkin-btn').forEach(b => {
+                    b.classList.remove('checked');
+                    b.innerHTML = '📌 Asistir';
+                });
+                actualizarVistaCME();
+            }
+        }
+
+        function guardarPerfil() {
+            localStorage.setItem('user-name', document.getElementById('userName').value);
+            localStorage.setItem('user-specialty', document.getElementById('userSpecialty').value);
+        }
+
+        function cargarPerfil() {
+            document.getElementById('userName').value = localStorage.getItem('user-name') || '';
+            document.getElementById('userSpecialty').value = localStorage.getItem('user-specialty') || '';
+        }
+
+        function imprimirCME() {
+            const nombre = document.getElementById('userName').value || 'Asistente';
+            const especialidad = document.getElementById('userSpecialty').value || '';
+            const charlas = document.getElementById('totalCharlas').innerText;
+            const horas = document.getElementById('totalHoras').innerText;
+
+            let contenido = `ASISTENCIA CONGRESO GASTRO 2025\n`;
+            contenido += `-----------------------------------\n`;
+            contenido += `Nombre: ${nombre}\n`;
+            contenido += `Especialidad: ${especialidad}\n`;
+            contenido += `-----------------------------------\n`;
+            contenido += `Resumen:\n`;
+            contenido += `- Sesiones asistidas: ${charlas}\n`;
+            contenido += `- Horas estimadas: ${horas}\n\n`;
+            contenido += `Detalle de Sesiones:\n`;
+
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key.startsWith('cme-')) {
+                    const data = JSON.parse(localStorage.getItem(key));
+                    contenido += `• ${data.titulo} (${data.hora})\n`;
+                }
+            }
+
+            // Crear un archivo temporal para descargar
+            const blob = new Blob([contenido], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Asistencia_Congreso_${nombre.replace(/\s+/g, '_')}.txt`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Inicializar
+        cargarPerfil();
+        actualizarVistaCME();
+
 
         // Funciones para el Asistente de Preguntas (Modo Automático)
         let currentCongreso = '';
