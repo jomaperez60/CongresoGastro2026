@@ -84,6 +84,12 @@
             padding: 2px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
             object-fit: contain;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .header-logo:hover {
+            transform: scale(1.1);
         }
 
         .header-separator {
@@ -412,6 +418,13 @@
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .aval-card:hover {
+            border-color: var(--azul-primario);
+            background: #f8f9fa;
         }
 
         .aval-logo {
@@ -505,16 +518,15 @@
         }
 
         .accordion:after {
-            content: '\02795';
-            /* Unicode for plus */
-            font-size: 14px;
+            content: '\002B';
             color: white;
+            font-size: 20px;
+            font-weight: bold;
             margin-left: 5px;
         }
 
         .accordion.active:after {
-            content: "\2796";
-            /* Unicode for minus */
+            content: "\2212";
         }
 
         .accordion.active {
@@ -868,9 +880,12 @@
                     <p>Asociación Hondureña de Gastroenterología</p>
                 </div>
                 <div class="header-logos">
-                    <img src="img/avales/cmh.png" alt="CMH" class="header-logo">
-                    <img src="img/avales/cenemec.png" alt="CENEMEC" class="header-logo">
-                    <img src="img/avales/ahg.png" alt="AHG" class="header-logo">
+                    <img src="img/avales/cmh.png" alt="CMH" class="header-logo" 
+                        onclick="visitarSitio('https://www.colegiomedico.hn', 'Colegio Médico de Honduras')">
+                    <img src="img/avales/cenemec.png" alt="CENEMEC" class="header-logo"
+                        onclick="visitarSitio('https://www.colegiomedico.hn/secretarias/asuntos-educativos-y-culturales/', 'CENEMEC')">
+                    <img src="img/avales/ahg.png" alt="AHG" class="header-logo"
+                        onclick="visitarSitio('https://www.facebook.com/people/Asociación-Hondureña-de-Gastroenterología/100063691627237/', 'Asociación Hondureña de Gastroenterología')">
                 </div>
             </div>
             <div class="header-separator"></div>
@@ -890,6 +905,7 @@
     <nav>
         <a href="#agenda">Agenda</a>
         <a href="#speakers">Ponentes</a>
+        <a href="#register">Registro</a>
         <a href="#cme">Mi Asistencia</a>
         <a href="#avales">Avales</a>
         <a href="#venue">Sede</a>
@@ -1273,82 +1289,50 @@
         </div>
     </div>
 
-    <div class="container" id="cme">
-        <h2>Mi Registro de Asistencia (CME)</h2>
-        <div class="cme-container">
-            <div class="perfil-form">
-                <p style="margin-top:0; font-weight:600;">Datos del Asistente</p>
-                <input type="text" id="userName" placeholder="Nombre Completo" onchange="guardarPerfil()">
-                <input type="text" id="userSpecialty" placeholder="Especialidad / Institución" onchange="guardarPerfil()">
-            </div>
-
-            <div class="cme-stats">
-                <div class="stat-card">
-                    <span id="totalCharlas">0</span>
-                    <label>Sesiones</label>
-                </div>
-                <div class="stat-card">
-                    <span id="totalHoras">0</span>
-                    <label>Horas Est.</label>
-                </div>
-            </div>
-
-            <div id="listaAsistencias">
-                <!-- Se llena dinámicamente -->
-                <p style="text-align:center; color:#888; padding:20px;">Aún no has registrado asistencia a ninguna charla.</p>
-            </div>
-
-            <div style="margin-top:20px; display:flex; gap:10px;">
-                <button class="btn-submit" onclick="imprimirCME()" style="flex:1; background:var(--azul-primario);">Exportar Resumen 📄</button>
-                <button class="btn-limpiar" onclick="limpiarCME()">Limpiar Todo</button>
-            </div>
-        </div>
-    </div>
-
     <div class="container" id="avales">
         <h2>Avales Académicos</h2>
         <div class="aval-grid">
-            <div class="aval-card">
+            <div class="aval-card" onclick="visitarSitio('https://www.colegiomedico.hn', 'Colegio Médico de Honduras')">
                 <img src="img/avales/cmh.png" class="aval-logo" loading="lazy"
                     style="background: white; object-fit: contain;">
                 <h4>Colegio Médico de Honduras</h4>
             </div>
-            <div class="aval-card">
+            <div class="aval-card" onclick="visitarSitio('https://www.colegiomedico.hn/secretarias/asuntos-educativos-y-culturales/', 'CENEMEC')">
                 <img src="img/avales/cenemec.png" class="aval-logo" loading="lazy"
                     style="background: white; object-fit: contain;">
                 <h4>Centro Nacional de Educación Médica Continua</h4>
             </div>
-            <div class="aval-card">
+            <div class="aval-card" onclick="visitarSitio('https://www.facebook.com/people/Asociación-Hondureña-de-Gastroenterología/100063691627237/', 'Asociación Hondureña de Gastroenterología')">
                 <img src="img/avales/ahg.png" class="aval-logo" loading="lazy"
                     style="background: white; object-fit: contain;">
                 <h4>Asociación Hondureña de Gastroenterología</h4>
             </div>
-            <div class="aval-card">
+            <div class="aval-card" onclick="visitarSitio('https://www.facebook.com/p/Sociedad-Latinoamerica-de-Neurogastro-61571855903184/', 'Sociedad Latinoamericana de Neurogastroenterología')">
                 <img src="img/avales/slng.png" class="aval-logo" loading="lazy"
                     style="background: white; object-fit: contain;">
                 <h4>Sociedad Latinoamericana de Neurogastroenterología</h4>
             </div>
-            <div class="aval-card">
+            <div class="aval-card" onclick="visitarSitio('https://www.opge.org', 'Organización Panamericana de Gastroenterología')">
                 <img src="img/avales/opge.png" class="aval-logo" loading="lazy"
                     style="background: white; object-fit: contain;">
                 <h4>Organización Panamericana de Gastroenterología</h4>
             </div>
-            <div class="aval-card">
+            <div class="aval-card" onclick="visitarSitio('https://alehlatam.org', 'Asociación Latinoamericana para el Estudio del Hígado')">
                 <img src="img/avales/aleh.png" class="aval-logo" loading="lazy"
                     style="background: white; object-fit: contain;">
                 <h4>Asociación Latinoamericana para el Estudio del Hígado</h4>
             </div>
-            <div class="aval-card">
+            <div class="aval-card" onclick="visitarSitio('https://siedonline.org', 'Sociedad Interamericana de Endoscopia Digestiva')">
                 <img src="img/avales/sied.png" class="aval-logo" loading="lazy"
                     style="background: white; object-fit: contain;">
                 <h4>Sociedad Interamericana de Endoscopia Digestiva</h4>
             </div>
-            <div class="aval-card">
+            <div class="aval-card" onclick="visitarSitio('https://laspghan.org', 'Sociedad Latinoamericana de Gastroenterología, Hepatología y Nutrición Pediátrica')">
                 <img src="img/avales/laspghan.png" class="aval-logo" loading="lazy"
                     style="background: white; object-fit: contain;">
                 <h4>Sociedad Latinoamericana de Gastroenterología, Hepatología y Nutrición Pediátrica</h4>
             </div>
-            <div class="aval-card">
+            <div class="aval-card" onclick="visitarSitio('https://roma-latam.lat', 'Roma V LATAM')">
                 <img src="img/avales/romav.png" class="aval-logo" loading="lazy"
                     style="background: white; object-fit: contain;">
                 <h4>Roma V LATAM</h4>
@@ -1372,6 +1356,40 @@
         <a href="https://forms.gle/m8CYKtRr24YFecqp8" target="_blank"
             style="display:inline-block; margin-top:10px; padding:10px 20px; background:var(--azul-primario); color:white; text-decoration:none; border-radius:5px; font-weight:bold;">Inscribirme
             Ahora</a>
+    </div>
+
+    <div class="container" id="cme">
+        <button class="accordion" onclick="toggleAccordion('cme-panel')">Mi Registro de Asistencia (CME)</button>
+        <div id="cme-panel" class="panel">
+            <div class="cme-container">
+                <div class="perfil-form" style="margin-top: 15px;">
+                    <p style="margin-top:0; font-weight:600;">Datos del Asistente</p>
+                    <input type="text" id="userName" placeholder="Nombre Completo" onchange="guardarPerfil()">
+                    <input type="text" id="userSpecialty" placeholder="Especialidad / Institución" onchange="guardarPerfil()">
+                </div>
+
+                <div class="cme-stats">
+                    <div class="stat-card">
+                        <span id="totalCharlas">0</span>
+                        <label>Sesiones</label>
+                    </div>
+                    <div class="stat-card">
+                        <span id="totalHoras">0</span>
+                        <label>Horas Est.</label>
+                    </div>
+                </div>
+
+                <div id="listaAsistencias">
+                    <!-- Se llena dinámicamente -->
+                    <p style="text-align:center; color:#888; padding:20px;">Aún no has registrado asistencia a ninguna charla.</p>
+                </div>
+
+                <div style="margin-top:20px; display:flex; gap:10px;">
+                    <button class="btn-submit" onclick="imprimirCME()" style="flex:1; background:var(--azul-primario);">Exportar Resumen 📄</button>
+                    <button class="btn-limpiar" onclick="limpiarCME()">Limpiar Todo</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <footer style="text-align: center; padding: 20px;">
@@ -1988,6 +2006,13 @@
             a.download = `Asistencia_Congreso_${nombre.replace(/\s+/g, '_')}.txt`;
             a.click();
             URL.revokeObjectURL(url);
+        }
+
+        // Función para visitar sitios externos con confirmación
+        function visitarSitio(url, nombre) {
+            if (confirm(`¿Deseas salir de la aplicación para visitar el sitio web oficial de ${nombre}?`)) {
+                window.open(url, '_blank');
+            }
         }
 
         // Inicializar
